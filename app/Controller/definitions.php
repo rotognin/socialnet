@@ -7,7 +7,9 @@ define('DS', DIRECTORY_SEPARATOR);
 define('DIR', array('controller' => '..' . DS . '..' . DS . 'app' . DS . 'Controller' . DS,
                     'model'      => '..' . DS . '..' . DS . 'app' . DS . 'Model' . DS,
                     'view'       => '..' . DS . '..' . DS . 'app' . DS . 'View' . DS,
+                    'baseView'   => 'app' . DS . 'View' . DS,
                     'login'      => '..' . DS . '..' . DS,
+                    'socialnet'  => '..' . DS . '..' . DS . 'socialnet.php',
                     'log'        => '..' . DS . '..' . DS . 'log' . DS
                    )
         );
