@@ -3,7 +3,10 @@
 /**
  * Classe para gravação de Log e mensagens na variável $_SESSION['message']
  */
-abstract class Log
+
+ namespace App\Controller;
+
+class Log
 {
     private function __constructor(){}
 

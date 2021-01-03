@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * Página de login do sistema
+ */
+
 session_start();
 $message = (isset($_SESSION['message']) && $_SESSION['message'] != '') ? $_SESSION['message'] : '';
 $_SESSION['message'] = '';
+
+$_SESSION['userId'] = 0;
 
 ?>
 
@@ -20,7 +26,7 @@ $_SESSION['message'] = '';
         <header class="w3-container w3-light-grey w3-margin-top"><h3>SocialNET</h3></header>
         <div class="w3-container">
             <p>
-            <form method="post" class="w3-container" action="app/Controller/?action=login">
+            <form method="post" class="w3-container" action="main.php?action=login">
                 <label for="login">Login:</label>
                 <input type="text" id="login" name="login" autofocus="autofocus">
                 <br><br>

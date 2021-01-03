@@ -1,3 +1,14 @@
+<?php
+/**
+ * Página principal do usuário logado
+ * Será tipo um "Dashboard" com as informações da pessoa, as atividades
+ * de seus amigos e postagens feitas nas comunidades que ele participa
+ */
+
+
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +20,11 @@
 </head>
 <body>
     <div class="w3-container w3-card-4 w3-margin">
-        <h3>Dentro do sistema!</h3>
+        <h3>Página principal</h3>
         <p><?php echo $_SESSION['userId']; ?></p>
         <p><?php echo $_SESSION['userName']; ?></p>
+        <br>
+        <p><a href="main.php?action=logout">Sair</a></p>
     </div>
 </body>
 </html>

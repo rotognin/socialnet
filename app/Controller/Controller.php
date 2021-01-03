@@ -1,33 +1,59 @@
 <?php
 
-class Controller extends Log
+namespace App\Controller;
+
+class Controller
 {
     static function loginAction(array $data)
     {
         if ($data['login'] == ''){
-            $_SESSION['message'] = 'Login em branco.';
-            self::indexAction();
+            Log::message('Login em branco.');
+            self::homeAction();
+        }
+
+        if ($data['password'] == ''){
+            Log::message('Senha em branco');
+            self::homeAction();
         }
 
         // Efetuar as rotinas de login
 
 
         // Login OK, carregar a view principal
-        $_SESSION['userId'] = '1';
-        $_SESSION['userName'] = 'Rodrigo Tognin';
+        $_SESSION['userId'] = 1;
+        $_SESSION['userName'] = $data['login'];
 
-        self::viewAction();
+        self::mainAction();
     }
 
-    static function indexAction()
+    static function logoutAction()
     {
-        header('Location: ' . DIR['login']);
+        session_unset();
+        self::homeAction();
     }
 
-    static function viewAction($page = '')
+    static function homeAction()
     {
-        $view = ($page == '') ? DIR['baseView'] . 'index.php' : DIR['baseView'] . $page . '.php';
-        $_SESSION['page'] = $view;
-        header('Location: ' . DIR['socialnet']);
+        header('Location: ' . DIR['home']);
+        exit();
+    }
+
+    /**
+     * Chama a página principal do usuário logado
+     */
+    static function mainAction()
+    {
+        self::viewAction('index');
+    }
+
+    /**
+     * Passa o controle para a página da rede passando a view a ser carregada lá
+     */
+    static function viewAction($view)
+    {
+        // Monta a localização da página principal com a view a ser carregada
+        $location = 'socialnet.php?view=' . $view;
+        // Redireciona para a página principal com a página a ser carregada por lá
+        header('Location: ' . $location);
     }
 }
