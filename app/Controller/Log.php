@@ -4,7 +4,7 @@
  * Classe para gravação de Log e mensagens na variável $_SESSION['message']
  */
 
- namespace App\Controller;
+ namespace app\Controller;
 
 class Log
 {

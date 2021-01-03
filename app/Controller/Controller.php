@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Controller;
+namespace app\Controller;
+
+use app\Model as Model;
 
 class Controller
 {
@@ -17,11 +19,15 @@ class Controller
         }
 
         // Efetuar as rotinas de login
+        $o_user = new Model\User();
+        if (!$o_user->login($data['login'], $data['password'])){
+            self::homeAction();
+        }
 
 
         // Login OK, carregar a view principal
-        $_SESSION['userId'] = 1;
-        $_SESSION['userName'] = $data['login'];
+        $_SESSION['userId'] = $o_user->usuId;
+        $_SESSION['userName'] = $o_user->usuName;
 
         self::mainAction();
     }
