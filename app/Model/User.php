@@ -32,6 +32,12 @@ class User
             return false;
         }
 
+        if ($result[0]['usuStatus'] <> 1){
+            $usuStatus = ($result[0]['usuStatus'] == 2) ? 'Inativo' : 'Bloqueado';
+            Controller\Log::message('Usuário não pode entrar no sistema. Status: ' . $usuStatus );
+            return false;
+        }
+
         $this->usuId = $result[0]['usuId'];
         $this->usuName = $result[0]['usuName'];
 
