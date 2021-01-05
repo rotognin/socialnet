@@ -20,7 +20,7 @@ class User
         if (preg_match('/[^A-Za-z0-9]/', $login)){
             Controller\Log::message('Usuário não cadastrado. (Caractres inválidos)');
             return false;
-        } 
+        }
 
         $passEncrypted = sha1($password);
         $sql = 'SELECT * FROM users_tb WHERE usuLogin = "' . $login . '" AND usuPassword = "' . $passEncrypted . '"';

@@ -12,7 +12,7 @@ class Log
 
     static function write($text)
     {
-        $logFile = DIR['log'] . 'log.txt';
+        $logFile = DIR['log'];
         $handle = fopen($logFile, 'a');
         $today = getdate();
 
@@ -32,5 +32,10 @@ class Log
     static function message($text)
     {
         $_SESSION['message'] .= $text . PHP_EOL;
+    }
+
+    static function clearMessages()
+    {
+        $_SESSION['message'] = '';
     }
 }

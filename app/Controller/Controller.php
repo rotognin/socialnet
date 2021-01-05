@@ -6,26 +6,21 @@ use app\Model as Model;
 
 class Controller
 {
+    /**
+     * Realizar o login do usuário
+     */
     static function loginAction(array $data)
     {
-        if ($data['login'] == ''){
-            Log::message('Login em branco.');
+        if ($data['login'] == '' || $data['password'] == ''){
+            Log::message('Login ou Senha em branco.');
             self::homeAction();
         }
 
-        if ($data['password'] == ''){
-            Log::message('Senha em branco');
-            self::homeAction();
-        }
-
-        // Efetuar as rotinas de login
         $o_user = new Model\User();
         if (!$o_user->login($data['login'], $data['password'])){
             self::homeAction();
         }
 
-
-        // Login OK, carregar a view principal
         $_SESSION['userId'] = $o_user->usuId;
         $_SESSION['userName'] = $o_user->usuName;
 
@@ -53,7 +48,29 @@ class Controller
     }
 
     /**
-     * Passa o controle para a página da rede passando a view a ser carregada lá
+     * Verificação de criação de novo usuário
+     */
+    static function newuserAction(array $data)
+    {
+        if (!Filters::commomText($data['name'])){
+            Log::message('Caracteres inválidos no nome');
+            header('Location: createuser.php');
+            exit();
+        }
+        
+        if ($data['name'] == '' || $data['login'] == ''){
+            Log::message('Existem campos em branco');
+            header('Location: createuser.php');
+            exit();
+        }
+
+        
+
+
+    }
+
+    /**
+     * Passa o controle para a View
      */
     static function viewAction($view)
     {
