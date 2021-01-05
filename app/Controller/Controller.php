@@ -21,8 +21,8 @@ class Controller
             self::homeAction();
         }
 
-        $_SESSION['userId'] = $o_user->usuId;
-        $_SESSION['userName'] = $o_user->usuName;
+        $_SESSION['userId'] = $o_user->user['usuId'];
+        $_SESSION['userName'] = $o_user->user['usuName'];
 
         self::mainAction();
     }
@@ -52,21 +52,7 @@ class Controller
      */
     static function newuserAction(array $data)
     {
-        if (!Filters::commomText($data['name'])){
-            Log::message('Caracteres inválidos no nome');
-            header('Location: createuser.php');
-            exit();
-        }
-        
-        if ($data['name'] == '' || $data['login'] == ''){
-            Log::message('Existem campos em branco');
-            header('Location: createuser.php');
-            exit();
-        }
-
-        
-
-
+        UserController::newUser($data);
     }
 
     /**

@@ -6,12 +6,17 @@ use app\Controller as Controller;
 
 class User
 {
-    public $usuId;
-    public $usuName;
+    public $user = array('usuId' => 0,
+                         'usuName' => '',
+                         'usuLogin' => '',
+                         'usuPassword' => '',
+                         'usuStatus' => 0,
+                         'usuDate' => ''
+                        );
 
     public function __construct($usuId = 0)
     {
-        $this->usuId = $usuId;
+        $this->user['usuId'] = $usuId;
         $this->load();
     }
 
@@ -38,24 +43,52 @@ class User
             return false;
         }
 
-        $this->usuId = $result[0]['usuId'];
-        $this->usuName = $result[0]['usuName'];
+        $this->loadArray($result[0]);
 
         return true;
     }
 
+    private function loadArray(array $userData)
+    {
+        foreach ($userData as $field => $value)
+        {
+            $this->user[$field] = $value;
+            //Controller\Log::write($field . ' = ' . $value);
+        }
+    }
+
     private function load()
     {
-        if ($this->usuId > 0){
-            $sql = 'SELECT * FROM users_tb WHERE usuId = ' . $this->usuId;
+        if ($this->user['usuId'] > 0){
+            $sql = 'SELECT * FROM users_tb WHERE usuId = ' . $this->user['usuId'];
             $resultSet = Connection::getConnection()->query($sql, \PDO::FETCH_ASSOC);
             $result = $resultSet->fetchAll();
 
             if (!is_null($result)){
-                print_r($result);
+                //print_r($result);
                 $this->usuName = $result[0]['usuName'];
             }
         }
-        
+    }
+
+    public function write()
+    {
+        $sql = 'INSERT INTO users_tb (usuName, usuLogin, usuPassword) ' .
+               'VALUES (:usuName, :usuLogin, :usuPassword)';
+        $prepared = Connection::getConnection()->prepare($sql);
+        return $prepared->execute(array('usuName'     => $this->user['usuName'],
+                                        'usuLogin'    => $this->user['usuLogin'],
+                                        'usuPassword' => $this->user['usuPassword']));
+    }
+
+    public function loginExists($login)
+    {
+        $sql = 'SELECT usuLogin FROM users_tb WHERE usuLogin = :login';
+        $prepared = Connection::getConnection()->prepare($sql);
+        $prepared->execute(array('login' => $login));
+        $result = $prepared->fetchAll();
+
+        //Controller\Log::write(print_r($result, true));
+        return ($result[0]['usuLogin'] == $login);
     }
 }
