@@ -4,9 +4,6 @@
  * Será tipo um "Dashboard" com as informações da pessoa, as atividades
  * de seus amigos e postagens feitas nas comunidades que ele participa
  */
-
-
-
 ?>
 
 <!DOCTYPE html>

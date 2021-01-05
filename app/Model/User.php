@@ -88,7 +88,6 @@ class User
         $prepared->execute(array('login' => $login));
         $result = $prepared->fetchAll();
 
-        //Controller\Log::write(print_r($result, true));
-        return ($result[0]['usuLogin'] == $login);
+        return (!empty($result));
     }
 }
