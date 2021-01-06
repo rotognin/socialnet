@@ -65,8 +65,7 @@ class User
             $result = $resultSet->fetchAll();
 
             if (!is_null($result)){
-                //print_r($result);
-                $this->usuName = $result[0]['usuName'];
+                $this->loadArray($result[0]);
             }
         }
     }

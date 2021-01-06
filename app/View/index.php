@@ -4,6 +4,17 @@
  * Será tipo um "Dashboard" com as informações da pessoa, as atividades
  * de seus amigos e postagens feitas nas comunidades que ele participa
  */
+
+use app\Model as Model;
+
+if (!isset($_SESSION['userId']) || $_SESSION['userId'] == 0) {
+    header('Location: index.php');
+    exit();
+}
+
+// Carregar o usuário logado
+$o_user = new Model\User($_SESSION['userId']);
+
 ?>
 
 <!DOCTYPE html>
@@ -18,8 +29,8 @@
 <body>
     <div class="w3-container w3-card-4 w3-margin">
         <h3>Página principal</h3>
-        <p><?php echo $_SESSION['userId']; ?></p>
-        <p><?php echo $_SESSION['userName']; ?></p>
+        <p><?php echo $o_user->user['usuId']; ?></p>
+        <p><?php echo $o_user->user['usuName']; ?></p>
         <br>
         <p><a href="main.php?action=logout">Sair</a></p>
     </div>
