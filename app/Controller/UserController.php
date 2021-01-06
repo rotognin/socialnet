@@ -28,9 +28,8 @@ class UserController
             exit();
         }
 
-        $o_user->user['usuName'] = $data['name'];
-        $o_user->user['usuLogin'] = $data['login'];
-        $o_user->user['usuPassword'] = sha1($data['password']);
+        $data['password'] = sha1($data['password']);
+        $o_user->setFields($data);
 
         if ($o_user->write()){
             Log::message('Usuário cadastrado com sucesso!');
@@ -39,6 +38,11 @@ class UserController
             Log::message('Não foi possível cadastrar o usuário.');
             header('Location: createuser.php');
         }
+    }
 
+    static function updateUser($data)
+    {
+        $o_user = new Model\User($data['id']);
+        $o_user->rewrite($data);
     }
 }

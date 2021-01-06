@@ -56,6 +56,23 @@ class Controller
     }
 
     /**
+     * Perfil do usuário logado
+     */
+    static function profileAction()
+    {
+        self::viewAction('profile');
+    }
+
+    /**
+     * Atualização do usuário
+     */
+    static function updateuserAction($data)
+    {
+        UserController::updateUser($data);
+        self::mainAction();
+    }
+
+    /**
      * Passa o controle para a View
      */
     static function viewAction($view)

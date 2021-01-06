@@ -14,13 +14,7 @@ $_SESSION['userId'] = 0;
 
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>SocialNET - Pessoas conectadas</title>
-
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link href="public/style/w3.css" type="text/css" rel="stylesheet">
-</head>
+<?php include 'html' . DIRECTORY_SEPARATOR . 'head.php'; ?>
 <body>
     <div class="w3-container w3-card-4 w3-margin">
         <header class="w3-container w3-light-grey w3-margin-top"><h3>SocialNET</h3></header>

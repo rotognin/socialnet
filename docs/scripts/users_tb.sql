@@ -5,5 +5,7 @@ CREATE TABLE `users_tb` (
   `usuPassword` varchar(100) DEFAULT NULL,
   `usuStatus` int(11) DEFAULT '1' COMMENT '1 - Usuário liberado\n2 - Usuário inativo\n3 - Usuário bloqueado',
   `usuDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuCity` varchar(80) DEFAULT NULL,
+  `usuState` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`usuId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

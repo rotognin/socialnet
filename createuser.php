@@ -35,6 +35,12 @@ $_SESSION['message'] = '';
                 <label for="password">Senha:</label>
                 <input type="password" id="password" name="password">
                 <br><br>
+                <label for="city">Cidade:</label>
+                <input type="text" id="city" name="city">
+                <br><br>
+                <label for="state">Estado:</label>
+                <input type="text" id="state" name="state">
+                <br><br>
                 <input type="submit" value="Criar" class="w3-button w3-blue">
                 <p><a href="index.php">Voltar</a></p>
             </form>

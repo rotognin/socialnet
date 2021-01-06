@@ -7,32 +7,34 @@
 
 use app\Model as Model;
 
-if (!isset($_SESSION['userId']) || $_SESSION['userId'] == 0) {
+$userId = (isset($_SESSION['userId']) && $_SESSION['userId'] > 0) ? $_SESSION['userId'] : 0;
+
+if ($userId == 0) {
     header('Location: index.php');
     exit();
 }
 
 // Carregar o usuário logado
-$o_user = new Model\User($_SESSION['userId']);
+$o_user = new Model\User($userId);
 
 ?>
 
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>SocialNET - Pessoas conectadas</title>
-
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link href="public/style/w3.css" type="text/css" rel="stylesheet">
-</head>
+<?php include 'html' . DIRECTORY_SEPARATOR . 'head.php'; ?>
 <body>
     <div class="w3-container w3-card-4 w3-margin">
         <h3>Página principal</h3>
-        <p><?php echo $o_user->user['usuId']; ?></p>
-        <p><?php echo $o_user->user['usuName']; ?></p>
+        <p><?php echo $o_user->user['usuId'] . ' - ' . $o_user->user['usuName']; ?></p>
+        <p>Desde: <?php echo DateTime($o_user->user['usuDate']); ?></p>
         <br>
-        <p><a href="main.php?action=logout">Sair</a></p>
+        <p>
+        <a class="w3-button w3-blue" href="main.php?action=profile">Perfil</a>
+        <a class="w3-button w3-blue" href="main.php?action=friends">Amigos</a>
+        <a class="w3-button w3-blue" href="main.php?action=communities">Comunidades</a>
+        <a class="w3-button w3-blue" href="main.php?action=logout">Sair</a>
+        </p>
+        <br>
     </div>
 </body>
 </html>

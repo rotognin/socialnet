@@ -2,6 +2,7 @@
 
 session_start();
 require 'lib' . DIRECTORY_SEPARATOR . 'definitions.php';
+require 'lib' . DIRECTORY_SEPARATOR . 'formatting.php';
 
 // Carrega o caminho da View correspondente
 $view = DIR['view'] . $_GET['view'] . '.php';
