@@ -68,7 +68,6 @@ class User
         foreach ($userData as $field => $value)
         {
             $this->user[$field] = $value;
-            //Controller\Log::write($field . ' = ' . $value);
         }
     }
 
@@ -97,12 +96,18 @@ class User
                                         'usuState'    => $this->user['usuState']));
     }
 
+    /**
+     * Atualizar os dados do usuário no banco.
+     * @param array $data
+     * @return bool
+     */
     public function rewrite(array $data)
     {
         // Futuramente extrair essa estrutura de montagem do SQL para um classe
         // abstrata onde as outras tabelas poderão usar a mesma lógica
         $sql = 'UPDATE users_tb SET ' ;
         $set = '';
+        $arrayFields = array();
 
         foreach ($data as $key => $value)
         {
@@ -111,24 +116,44 @@ class User
 
             if (array_key_exists($key, $this->user)){
                 if ($value != $this->user[$key]){
-                    // Estou montando os valores do UPDATE usando parâmetros para o Prepare do PDO
-                    $set .= $key . ' = :' . $key . ' ';
+                    $set .= $key . ' = :' . $key . ', ';
+                    $arrayFields[$key] = $value;
                 }
             }
         }
 
-        if (empty($set)){
+        if (empty($arrayFields)){
             // Se não existirem campos a serem atualizados, sair
-            return;
+            return true;
         }
 
+        $set = substr($set, 0, -2);
+
         // IMPORTANTÍSSIMO!!! 
-        $sql .= ' WHERE usuId = ' . $this->user['usuId'];
+        $sql .= $set . ' WHERE usuId = ' . $this->user['usuId'];
 
-        // Prosseguir com a atualização do usuário
+        $prepared = Connection::getConnection()->prepare($sql);
+        
+        foreach($arrayFields as $key => $value)
+        {
+            if (is_int($value)){
+                $prepared->bindValue($key, $value, \PDO::PARAM_INT);
+            } else {
+                $prepared->bindValue($key, $value);
+            }
+        }
 
+        $prepared->execute();
 
+        /*
+        ob_start();
+        $prepared->debugDumpParams();
+        $ddp = ob_get_contents();
+        ob_end_clean();
+        Controller\Log::write($ddp);
+        */
 
+        return ($prepared->rowCount() > 0);
     }
 
     public function loginExists($login)
