@@ -56,6 +56,22 @@ class Controller
     }
 
     /**
+     * Criar nova postagem
+     */
+    static function insertuserpostAction(array $data)
+    {
+        PostController::insert($data); // *** a ser desenvolvida
+    }
+
+    /**
+     * Atualizar postagem
+     */
+    static function updateuserpostAction(array $data)
+    {
+        PostController::insert($data); // *** a ser desenvolvida
+    }
+
+    /**
      * Perfil do usuário logado
      */
     static function profileAction()

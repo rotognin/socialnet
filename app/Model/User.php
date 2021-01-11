@@ -145,14 +145,6 @@ class User
 
         $prepared->execute();
 
-        /*
-        ob_start();
-        $prepared->debugDumpParams();
-        $ddp = ob_get_contents();
-        ob_end_clean();
-        Controller\Log::write($ddp);
-        */
-
         return ($prepared->rowCount() > 0);
     }
 

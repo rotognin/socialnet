@@ -24,8 +24,7 @@ $o_user = new Model\User($userId);
 <?php include 'html' . DIRECTORY_SEPARATOR . 'head.php'; ?>
 <body>
     <div class="w3-container w3-card-4 w3-margin">
-        <h3>Página principal</h3>
-        <p><?php echo $o_user->user['usuId'] . ' - ' . $o_user->user['usuName']; ?></p>
+        <h3><?php echo $o_user->user['usuId'] . ' - ' . $o_user->user['usuName']; ?></h3>
         <p>Desde: <?php echo DateTime($o_user->user['usuDate']); ?></p>
         <br>
         <p>
@@ -33,6 +32,14 @@ $o_user = new Model\User($userId);
         <a class="w3-button w3-blue" href="main.php?action=friends">Amigos</a>
         <a class="w3-button w3-blue" href="main.php?action=communities">Comunidades</a>
         <a class="w3-button w3-blue" href="main.php?action=logout">Sair</a>
+        </p>
+        <br>
+    </div>
+    <div class="w3-container w3-card-4 w3-margin">
+    <h3>Postagens:</h3>
+        <p>
+        <a class="w3-button w3-blue" href="main.php?action=createuserpost">Criar</a>
+        <a class="w3-button w3-blue" href="main.php?action=listuserposts">Listar</a>
         </p>
         <br>
     </div>
