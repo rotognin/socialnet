@@ -68,7 +68,7 @@ class Controller
      */
     static function updateuserpostAction(array $data)
     {
-        PostController::insert($data); // *** a ser desenvolvida
+        PostController::update($data); // *** a ser desenvolvida
     }
 
     /**

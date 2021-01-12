@@ -6,7 +6,7 @@ use app\Model as Model;
 
 class UserController
 {
-    static public function newUser($data)
+    static public function newUser(array $data)
     {
         if (!Filters::commomText($data['name'])){
             Log::message('Caracteres inválidos no nome');
@@ -40,7 +40,7 @@ class UserController
         }
     }
 
-    static function updateUser($data)
+    static function updateUser(array $data)
     {
         $o_user = new Model\User($data['id']);
         $o_user->rewrite($data);

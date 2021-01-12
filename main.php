@@ -23,7 +23,7 @@ Controller\Controller::$action($_POST);
  * A ser estudado e implementado para deixar mais dinâmica a chamada das classes de Controle
  */
 //$target = (isset($_POST['target'])) ? 'Controller\\' . ucfirst($_POST['target']) . 'Controller' : 'Controller\\Controller';
-//call_user_func([$target, $action], $_POST);
+//call_user_func(array($target, $action), $_POST);
 
 
 
