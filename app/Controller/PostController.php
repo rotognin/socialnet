@@ -14,20 +14,15 @@ class PostController
         // "strip tags" e proteções
 
 
-        $o_post = new Model\Post($data);
+        $o_post = new Model\Post();
+        $o_post->setFields($data);
+
         if ($o_post->write()){
             Log::message('Postagem cadastrada com sucesso!');
-
-            // Verificar de onde veio para setar o "Location" corretamente.
-            // Poderá ser uma postagem de usuário, para um usuário, ou em uma comunidade, ou 
-            // uma resposta a uma postagem nesses lugares.
-
             header('Location: index.php');
         } else {
             Log::message('Não foi possível gravar a postagem.');
-
             Controller::mainAction();
-            //header('Location: socialnet.php');
         }
     }
 

@@ -31,11 +31,35 @@ class Post
         }
     }
 
-    private function loadArray(array $postData)
+    public function loadArray(array $postData)
     {
         foreach ($postData as $field => $value)
         {
             $this->post[$field] = $value;
+        }
+    }
+
+    public function write()
+    {
+        $sql = 'INSERT INTO posts_tb (posUser, posVisibility, posText) ' .
+               'VALUES (:posUser, :posVisibility, :posText)';
+
+        $prepared = Connection::getConnection()->prepare($sql);
+        return $prepared->execute(array('posUser' => $this->post['posUser'],
+                                        'posVisibility' => $this->post['posVisibility'],
+                                        'posText' => $this->post['posText']));      
+    }
+
+    public function setFields(array $data)
+    {
+        foreach ($data as $key => $value)
+        {
+            // "Key name modifier"
+            $key = 'pos' . ucfirst($key);
+
+            if (array_key_exists($key, $this->post)){
+                $this->post[$key] = $value;
+            }
         }
     }
 }

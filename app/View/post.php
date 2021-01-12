@@ -1,6 +1,7 @@
 <?php
 
 use app\Model as Model;
+use app\Controller as Controller;
 
 $userId = (isset($_SESSION['userId']) && $_SESSION['userId'] > 0) ? $_SESSION['userId'] : 0;
 
@@ -12,20 +13,27 @@ if ($userId == 0) {
 // Carregar o usuário logado
 $o_user = new Model\User($userId);
 
-$message = (isset($_SESSION['message']) && $_SESSION['message'] != '') ? $_SESSION['message'] : '';
-$_SESSION['message'] = '';
-
 // Checar se a postagem está sendo inserida ou alterada
-$posId = (isset($_SESSION['posId'])) ? $_SESSION['posId'] : 0;
+$posId = (isset($_GET['posId'])) ? $_GET['posId'] : 0;
 $postAction = ($posId > 0) ? 'updateuserpost' : 'insertuserpost';
 $postHead = ($posId == 0) ? 'Nova postagem pessoal' : 'Editar postagem';
 
 // Se for edição de postagem, carregar o texto do banco para edição...
-// *** posteriormente
-$o_post = array('posId' => 0,
-                'posUser' => $o_user->user['usuId'],
-                'posVisibility' => 1,
-                'posText' => '');
+$o_post = new Model\Post($posId);
+if ($posId == 0) { $o_post->post['posVisibility'] = 1; }
+
+$message = (isset($_SESSION['message']) && $_SESSION['message'] != '') ? $_SESSION['message'] : '';
+$_SESSION['message'] = '';
+
+// Se o Post não for do usuário que a estiver vendo, dar mensagem
+if ($o_post->post['posUser'] > 0 && $o_post->post['posUser'] != $userId){
+    $message = 'Essa postagem pertence a outro usuário.';
+    Controller\Controller::mainAction();
+}
+
+
+//Controller\Log::write('Chegou até aqui...');
+Controller\Log::write($posId . ' - ' . $postAction . ' - ' . $postHead);
 
 ?>
 
@@ -38,27 +46,30 @@ $o_post = array('posId' => 0,
         <div class="w3-container">
             <p>
             <h3><?php echo $o_user->user['usuName']; ?></h3>
-            <form method="post" class="w3-container" action="main.php?action=<?php echo $postAction; ?>">
+            <form method="post" class="w3-container" 
+                action="main.php?action=<?php echo $postAction; ?>">
+
                 <label for="post">Postagem:</label><br>
-                <textarea id="post" name="text" rows="10" cols="100">
-                    <?php echo $o_post['posText']; ?>
-                </textarea>
+                <textarea id="post" name="text" rows="10" cols="100" autofocus="autofocus"><?php echo $o_post->post['posText']; ?></textarea>
                 <br><br>
                 <p>Tipo de visibilidade:
                     <br>
-                    <input type="radio" id="public" name="posVisibility" value="1" checked>
+                    <input type="radio" id="public" name="posVisibility" 
+                        value="1" <?php if ($o_post->post['posVisibility'] == 1) { echo 'checked'; } ?>>
                     <label for="public">Pública</label>
                     <br>
-                    <input type="radio" id="friends" name="posVisibility" value="2">
+                    <input type="radio" id="friends" name="posVisibility" 
+                        value="2" <?php if ($o_post->post['posVisibility'] == 2) { echo 'checked'; } ?>>
                     <label for="friends">Apenas amigos</label>
                     <br>
-                    <input type="radio" id="particular" name="posVisibility" value="3">
+                    <input type="radio" id="particular" name="posVisibility" 
+                        value="3" <?php if ($o_post->post['posVisibility'] == 3) { echo 'checked'; } ?>>
                     <label for="particular">Particular</label>
                 </p>
                 <br>
                 <input type="hidden" name="target" value="post">
-                <input type="hidden" name="posUser" value="<?php echo $o_post['posUser']; ?>">
-                <input type="hidden" name="posId" value="<?php echo $o_post['posId']; ?>">
+                <input type="hidden" name="posUser" value="<?php echo $userId; ?>">
+                <input type="hidden" name="posId" value="<?php echo $o_post->post['posId']; ?>">
                 <input type="submit" value="Gravar" class="w3-button w3-blue">
                 <p><a href="socialnet.php?view=index">Voltar</a></p>
             </form>

@@ -1,0 +1,37 @@
+12/1/2021 19:34:7 - 0 - insertuserpost - Nova postagem pessoal
+12/1/2021 19:34:10 - 0 - insertuserpost - Nova postagem pessoal
+12/1/2021 19:35:53 - Chegou até aqui para gravar a postagem
+12/1/2021 19:35:53 - Array
+(
+    [text] => Essa postagem deve ser a primeira.
+Bora postar nessa rede social!
+    [posVisibility] => 1
+    [target] => post
+    [posUser] => 0
+    [posId] => 0
+)
+
+12/1/2021 19:38:9 - 0 - insertuserpost - Nova postagem pessoal
+12/1/2021 19:38:26 - Chegou até aqui para gravar a postagem
+12/1/2021 19:38:26 - Array
+(
+    [text] => Primeira postagem.
+Espero que funcione legal
+    [posVisibility] => 1
+    [target] => post
+    [posUser] => 0
+    [posId] => 1
+)
+
+12/1/2021 19:39:34 - 0 - insertuserpost - Nova postagem pessoal
+12/1/2021 19:39:47 - Chegou até aqui para gravar a postagem
+12/1/2021 19:39:47 - Array
+(
+    [text] => Primeira postagem
+dessa rede social bem legal
+    [posVisibility] => 1
+    [target] => post
+    [posUser] => 1
+    [posId] => 0
+)
+

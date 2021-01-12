@@ -60,6 +60,8 @@ class Controller
      */
     static function insertuserpostAction(array $data)
     {
+        Log::write('Chegou até aqui para gravar a postagem');
+        Log::write(print_r($data, true));
         PostController::insert($data); // *** a ser desenvolvida
     }
 
@@ -77,6 +79,14 @@ class Controller
     static function profileAction()
     {
         self::viewAction('profile');
+    }
+
+    /**
+     * Criar uma postagem
+     */
+    static function createuserpostAction()
+    {
+        self::viewAction('post');
     }
 
     /**

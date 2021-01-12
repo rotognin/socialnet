@@ -63,7 +63,7 @@ class User
         return true;
     }
 
-    private function loadArray(array $userData)
+    public function loadArray(array $userData)
     {
         foreach ($userData as $field => $value)
         {
