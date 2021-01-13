@@ -88,6 +88,51 @@ class Post
         return ($prepared->rowCount() > 0);
     }
 
+    public function rewrite(array $data)
+    {
+        $sql = 'UPDATE posts_tb SET ' ;
+        $set = '';
+        $arrayFields = array();
+
+        foreach ($data as $key => $value)
+        {
+            // "key name modifier"
+            $key = 'pos' . ucfirst($key);
+
+            if (array_key_exists($key, $this->post)){
+                if ($value != $this->post[$key]){
+                    $set .= $key . ' = :' . $key . ', ';
+                    $arrayFields[$key] = $value;
+                }
+            }
+        }
+
+        if (empty($arrayFields)){
+            // Se não existirem campos a serem atualizados, sair
+            return true;
+        }
+
+        $set = substr($set, 0, -2);
+
+        // IMPORTANTÍSSIMO!!! 
+        $sql .= $set . ' WHERE posId = ' . $this->post['posId'];
+
+        $prepared = Connection::getConnection()->prepare($sql);
+        
+        foreach($arrayFields as $key => $value)
+        {
+            if (is_int($value)){
+                $prepared->bindValue($key, $value, \PDO::PARAM_INT);
+            } else {
+                $prepared->bindValue($key, $value);
+            }
+        }
+
+        $prepared->execute();
+
+        return ($prepared->rowCount() > 0);
+    }
+
     public function listAll(int $userId, string $orderBy = 'ASC')
     {
         $sql = 'SELECT * FROM posts_tb WHERE posUser = :posUser ORDER BY posId ' . $orderBy;

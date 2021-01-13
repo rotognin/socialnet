@@ -18,7 +18,7 @@ require 'lib' . DIRECTORY_SEPARATOR . 'definitions.php';
 
 $action = (isset($_GET['action'])) ? $_GET['action'] . 'Action' : 'homeAction';
 
-Controller\Controller::$action($_POST);
+Controller\Controller::$action($_POST, $_GET);
 
 /**
  * A ser estudado e implementado para deixar mais dinâmica a chamada das classes de Controle

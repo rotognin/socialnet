@@ -32,6 +32,7 @@ class PostController
 
     static public function update(array $data)
     {
-        // A ser desenvolvido
+        $o_post = new Model\Post($data['id']);
+        $o_post->rewrite($data);
     }
 }

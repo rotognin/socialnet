@@ -68,7 +68,8 @@ class Controller
      */
     static function updateuserpostAction(array $data)
     {
-        PostController::update($data); // *** a ser desenvolvida
+        PostController::update($data);
+        self::viewAction('userposts');
     }
 
     static function listuserpostsAction()
@@ -95,9 +96,13 @@ class Controller
     /**
      * Editar uma postagem
      */
-    static function edituserpostAction()
+    static function edituserpostAction(array $postData, array $getData)
     {
-
+        if (!array_key_exists('posId', $getData)){
+            self::viewAction('userposts');
+        } else {
+            self::viewAction('post', 'posId=' . $getData['posId']);
+        }
     }
 
     /**
@@ -112,10 +117,15 @@ class Controller
     /**
      * Passa o controle para a View
      */
-    static function viewAction(string $view)
+    static function viewAction(string $view, string $addGet = '')
     {
         // Monta a localização da página principal com a view a ser carregada
         $location = 'socialnet.php?view=' . $view;
+
+        if (!empty($addGet)){
+            $location .= '&' . $addGet;
+        }
+
         // Redireciona para a página principal com a página a ser carregada por lá
         header('Location: ' . $location);
     }

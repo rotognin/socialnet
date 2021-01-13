@@ -28,7 +28,7 @@ $userposts = $o_post->listAll($userId, 'DESC');
                 $html  = '';
                 $html  = '<div class="w3-container w3-card-4 w3-margin w3-padding">';
                 $html .= '<a class="w3-button w3-red w3-right" href="main.php?action=deleteuserpost">Apagar</a>';
-                $html .= '<a class="w3-button w3-blue w3-right w3-margin-right" href="main.php?action=edituserpost">Editar</a>';
+                $html .= '<a class="w3-button w3-blue w3-right w3-margin-right" href="main.php?action=edituserpost&posId=' . $post['posId'] . '">Editar</a>';
                 $html .= 'ID: ' . $post['posId'] . ' - Data: ' . DateTime($post['posDate']) . ' - ';
                 $html .= 'Visibilidade: ' . $o_post->visibilityDescription($post['posVisibility']);
                 $html .= '<br><p>' . nl2br($post['posText']) . '</p></div>';
