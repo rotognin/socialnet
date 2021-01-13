@@ -8,7 +8,7 @@ class Post
 {
     public $post = array('posId'         => 0,
                          'posUser'       => 0,
-                         'posVisibility' => '',
+                         'posVisibility' => 0,
                          'posText'       => '',
                          'posDate'       => '');
 
@@ -16,7 +16,26 @@ class Post
     {
         $this->post['posId'] = $posId;
         $this->load();
-    }                 
+    }
+
+    public function visibilityDescription(int $visibility)
+    {
+        $description = '';
+
+        switch ($visibility){
+            case 1:
+                $description = 'Pública';
+                break;
+            case 2:
+                $description = 'Apenas amigos';
+                break;
+            case 3:
+                $description = 'Particular';
+                break;
+        }
+
+        return $description;
+    }
     
     private function load()
     {
@@ -45,9 +64,38 @@ class Post
                'VALUES (:posUser, :posVisibility, :posText)';
 
         $prepared = Connection::getConnection()->prepare($sql);
-        return $prepared->execute(array('posUser' => $this->post['posUser'],
-                                        'posVisibility' => $this->post['posVisibility'],
-                                        'posText' => $this->post['posText']));      
+        $arrayExec = array('posUser'       => $this->post['posUser'],
+                           'posVisibility' => $this->post['posVisibility'],
+                           'posText'       => $this->post['posText']);
+
+        foreach ($arrayExec as $key => $value)
+        {
+            Controller\Log::write($key . ' - ' . $value);
+            if (is_int($value)){
+                $prepared->bindValue($key, $value, \PDO::PARAM_INT);
+            } else {
+                $prepared->bindValue($key, $value);
+            }
+        }
+
+        /**
+         * Estava dando muitos erros e não estava gravando a postagem
+         * Primeiro: eu estava nomeando errado os parâmetros na view
+         * Segundo: valores inteiros estavam sendo tratados como string
+         * Terceiro: estava usando "bindParam" em vez de "bindValue"
+         */
+        $prepared->execute();
+        return ($prepared->rowCount() > 0);
+    }
+
+    public function listAll(int $userId, string $orderBy = 'ASC')
+    {
+        $sql = 'SELECT * FROM posts_tb WHERE posUser = :posUser ORDER BY posId ' . $orderBy;
+        $prepare = Connection::getConnection()->prepare($sql);
+        $prepare->bindValue('posUser', $userId, \PDO::PARAM_INT);
+        $prepare->execute();
+
+        return $prepare->fetchAll();
     }
 
     public function setFields(array $data)

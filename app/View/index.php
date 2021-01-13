@@ -36,10 +36,17 @@ $o_user = new Model\User($userId);
         <br>
     </div>
     <div class="w3-container w3-card-4 w3-margin">
-    <h3>Postagens:</h3>
+        <h3>Postagens:</h3>
         <p>
         <a class="w3-button w3-blue" href="main.php?action=createuserpost">Criar</a>
         <a class="w3-button w3-blue" href="main.php?action=listuserposts">Listar</a>
+        </p>
+        <br>
+    </div>
+    <div class="w3-container w3-card-4 w3-margin">
+        <h3>Mensagens para você:</h3>
+        <p>
+            <!-- Exibir as mensagens dos amigos para o usuário -->
         </p>
         <br>
     </div>

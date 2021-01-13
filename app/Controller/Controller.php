@@ -56,13 +56,11 @@ class Controller
     }
 
     /**
-     * Criar nova postagem
+     * Gravar postagem
      */
     static function insertuserpostAction(array $data)
     {
-        Log::write('Chegou até aqui para gravar a postagem');
-        Log::write(print_r($data, true));
-        PostController::insert($data); // *** a ser desenvolvida
+        PostController::insert($data);
     }
 
     /**
@@ -71,6 +69,11 @@ class Controller
     static function updateuserpostAction(array $data)
     {
         PostController::update($data); // *** a ser desenvolvida
+    }
+
+    static function listuserpostsAction()
+    {
+        self::viewAction('userposts');
     }
 
     /**
@@ -82,7 +85,7 @@ class Controller
     }
 
     /**
-     * Criar uma postagem
+     * Criar uma postagem de usuário
      */
     static function createuserpostAction()
     {
@@ -90,9 +93,17 @@ class Controller
     }
 
     /**
+     * Editar uma postagem
+     */
+    static function edituserpostAction()
+    {
+
+    }
+
+    /**
      * Atualização do usuário
      */
-    static function updateuserAction($data)
+    static function updateuserAction(array $data)
     {
         UserController::updateUser($data);
         self::mainAction();
@@ -101,7 +112,7 @@ class Controller
     /**
      * Passa o controle para a View
      */
-    static function viewAction($view)
+    static function viewAction(string $view)
     {
         // Monta a localização da página principal com a view a ser carregada
         $location = 'socialnet.php?view=' . $view;

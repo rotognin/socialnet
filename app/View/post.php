@@ -54,22 +54,22 @@ Controller\Log::write($posId . ' - ' . $postAction . ' - ' . $postHead);
                 <br><br>
                 <p>Tipo de visibilidade:
                     <br>
-                    <input type="radio" id="public" name="posVisibility" 
+                    <input type="radio" id="public" name="visibility" 
                         value="1" <?php if ($o_post->post['posVisibility'] == 1) { echo 'checked'; } ?>>
                     <label for="public">Pública</label>
                     <br>
-                    <input type="radio" id="friends" name="posVisibility" 
+                    <input type="radio" id="friends" name="visibility" 
                         value="2" <?php if ($o_post->post['posVisibility'] == 2) { echo 'checked'; } ?>>
                     <label for="friends">Apenas amigos</label>
                     <br>
-                    <input type="radio" id="particular" name="posVisibility" 
+                    <input type="radio" id="particular" name="visibility" 
                         value="3" <?php if ($o_post->post['posVisibility'] == 3) { echo 'checked'; } ?>>
                     <label for="particular">Particular</label>
                 </p>
                 <br>
                 <input type="hidden" name="target" value="post">
-                <input type="hidden" name="posUser" value="<?php echo $userId; ?>">
-                <input type="hidden" name="posId" value="<?php echo $o_post->post['posId']; ?>">
+                <input type="hidden" name="user" value="<?php echo $userId; ?>">
+                <input type="hidden" name="id" value="<?php echo $o_post->post['posId']; ?>">
                 <input type="submit" value="Gravar" class="w3-button w3-blue">
                 <p><a href="socialnet.php?view=index">Voltar</a></p>
             </form>
