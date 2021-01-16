@@ -84,6 +84,17 @@ class User
         }
     }
 
+    static public function findName($usuId)
+    {
+        $sql = 'SELECT usuName FROM users_tb WHERE usuId = :usuId';
+        $prepared = Connection::getConnection()->prepare($sql);
+        $prepared->bindValue('usuId', $usuId, \PDO::PARAM_INT);
+        $prepared->execute();
+        $result = $prepared->fetchAll();
+
+        return $result[0]['usuName'];
+    }
+
     public function write()
     {
         $sql = 'INSERT INTO users_tb (usuName, usuLogin, usuPassword, usuCity, usuState) ' .

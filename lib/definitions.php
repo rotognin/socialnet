@@ -12,6 +12,13 @@ define('DIR', array('controller' => 'app' . DS . 'Controller' . DS,
                    )
         );
 
+// Constantes para os tipos de comunidades a serem listadas
+const COM_TL_ALL = 1;
+const COM_TL_IDCOMMUNITY = 2;
+const COM_TL_USERPARTICIPATE = 3;
+const COM_TL_USERCREATE = 4;
+const COM_TL_SEARCHBYNAME = 5;
+
 function autoload($class)
 {   
     include_once($class . '.php');

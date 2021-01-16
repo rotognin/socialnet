@@ -13,7 +13,7 @@ if ($userId == 0) {
 }
 
 $o_post = new Model\Post();
-$userposts = $o_post->listAll($userId, 'DESC');
+$userPosts = $o_post->listAll($userId, 'DESC');
 
 ?>
 
@@ -24,7 +24,7 @@ $userposts = $o_post->listAll($userId, 'DESC');
     <div class="w3-container w3-card-4 w3-margin">
         <header class="w3-container w3-light-grey w3-margin-top"><h3>Postagens:</h3></header>
         <?php 
-            foreach($userposts as $post){
+            foreach($userPosts as $post){
                 $html  = '';
                 $html  = '<div class="w3-container w3-card-4 w3-margin w3-padding">';
                 $html .= '<a class="w3-button w3-red w3-right" href="main.php?action=deleteuserpost">Apagar</a>';

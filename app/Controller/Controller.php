@@ -77,6 +77,16 @@ class Controller
         self::viewAction('userposts');
     }
 
+    static function listcommunitiesAction()
+    {
+        self::viewAction('usercommunities', 'usertarget=' . $_SESSION['userId']);
+    }
+
+    static function createcommunity()
+    {
+        self::viewAction('community');
+    }
+
     /**
      * Perfil do usuário logado
      */

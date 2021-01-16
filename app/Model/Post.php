@@ -6,11 +6,13 @@ use app\Controller as Controller;
 
 class Post
 {
-    public $post = array('posId'         => 0,
-                         'posUser'       => 0,
-                         'posVisibility' => 0,
-                         'posText'       => '',
-                         'posDate'       => '');
+    public $post = array(
+        'posId'         => 0,
+        'posUser'       => 0,
+        'posVisibility' => 0,
+        'posText'       => '',
+        'posDate'       => ''
+    );
 
     public function __construct($posId = 0)
     {

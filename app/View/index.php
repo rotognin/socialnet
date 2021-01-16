@@ -29,8 +29,8 @@ $o_user = new Model\User($userId);
         <br>
         <p>
         <a class="w3-button w3-blue" href="main.php?action=profile">Perfil</a>
-        <a class="w3-button w3-blue" href="main.php?action=friends">Amigos</a>
-        <a class="w3-button w3-blue" href="main.php?action=communities">Comunidades</a>
+        <a class="w3-button w3-blue" href="main.php?action=listfriends">Amigos</a>
+        <a class="w3-button w3-blue" href="main.php?action=listcommunities">Comunidades</a>
         <a class="w3-button w3-blue" href="main.php?action=logout">Sair</a>
         </p>
         <br>
@@ -46,7 +46,8 @@ $o_user = new Model\User($userId);
     <div class="w3-container w3-card-4 w3-margin">
         <h3>Mensagens para você:</h3>
         <p>
-            <!-- Exibir as mensagens dos amigos para o usuário -->
+        <a class="w3-button w3-blue" href="main.php?action=listusermessages">Listar Todas</a>
+            <!-- Exibir as mensagens não lidas dos amigos para o usuário -->
         </p>
         <br>
     </div>
