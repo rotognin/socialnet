@@ -82,9 +82,17 @@ class Controller
         self::viewAction('usercommunities', 'usertarget=' . $_SESSION['userId']);
     }
 
-    static function createcommunity()
+    static function createcommunityAction()
     {
         self::viewAction('community');
+    }
+
+    static function newcommunityAction(array $data)
+    {
+        $communityId = CommunityController::insert($data);
+        CommunityController::associateUser($communityId, $data['admuser']);
+
+        self::viewAction('usercommunities', 'usertarget=' . $data['admuser']);
     }
 
     /**

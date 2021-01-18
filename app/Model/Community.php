@@ -8,7 +8,7 @@ class Community
 {
     public $community = array(
         'comId'           => 0,
-        'comNome'         => '',
+        'comName'         => '',
         'comDescription'  => '',
         'comDateCreation' => '',
         'comStatus'       => 0,
@@ -25,7 +25,7 @@ class Community
 
     private function load()
     {
-        if ($this->post['comId'] > 0){
+        if ($this->community['comId'] > 0){
             $sql = 'SELECT * FROM communities_tb WHERE comId = ' . $this->community['comId'];
             $resultSet = Connection::getConnection()->query($sql, \PDO::FETCH_ASSOC);
             $result = $resultSet->fetchAll();
@@ -49,13 +49,14 @@ class Community
         $sql = 'INSERT INTO communities_tb (comName, comDescription, comStatus, comAcceptance, comVisibility, comAdmUser) ' .
                'VALUES (:comName, :comDescription, :comStatus, :comAcceptance, :comVisibility, :comAdmUser)';
 
-        $prepared = Connection::getConnection()->prepare($sql);
-        $arrayExec = array('comName'        => $this->post['comName'],
-                           'comDescription' => $this->post['comDescription'],
-                           'comStatus'      => $this->post['comStatus'],
-                           'comAcceptance'  => $this->post['comAcceptance'],
-                           'comVisibility'  => $this->post['comVisibility'],
-                           'comAdmUser'     => $this->post['comAdmUser']);
+        $connection = Connection::getConnection();
+        $prepared = $connection->prepare($sql);
+        $arrayExec = array('comName'        => $this->community['comName'],
+                           'comDescription' => $this->community['comDescription'],
+                           'comStatus'      => $this->community['comStatus'],
+                           'comAcceptance'  => $this->community['comAcceptance'],
+                           'comVisibility'  => $this->community['comVisibility'],
+                           'comAdmUser'     => $this->community['comAdmUser']);
 
         foreach ($arrayExec as $key => $value)
         {
@@ -67,7 +68,8 @@ class Community
         }
 
         $prepared->execute();
-        return ($prepared->rowCount() > 0);
+        return $connection->lastinsertid();
+        //return ($prepared->rowCount() > 0);
     }
 
     public function rewrite(array $data)
@@ -81,8 +83,8 @@ class Community
             // "key name modifier"
             $key = 'com' . ucfirst($key);
 
-            if (array_key_exists($key, $this->post)){
-                if ($value != $this->post[$key]){
+            if (array_key_exists($key, $this->community)){
+                if ($value != $this->community[$key]){
                     $set .= $key . ' = :' . $key . ', ';
                     $arrayFields[$key] = $value;
                 }

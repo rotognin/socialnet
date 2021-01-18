@@ -49,7 +49,6 @@ $titlePage = ($sameUser) ? 'Minhas Comunidades' : 'Comunidades de ' . Model\User
                 $html  = '<div class="w3-container w3-card-4 w3-padding">';
                 $html .= 'ID: ' . $community['comId'] . ' - Nome: ' . $community['comName'] . '<br>';
                 $html .= 'Descrição: ' . nl2br($community['comDescription']) . '<br>';
-                $html .= '<br><p>' . nl2br($post['posText']) . '</p></div>';
                 echo $html;
             }
         ?>

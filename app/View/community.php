@@ -14,6 +14,9 @@ if ($userId == 0) {
     exit();
 }
 
+$message = (isset($_SESSION['message']) && $_SESSION['message'] != '') ? $_SESSION['message'] : '';
+$_SESSION['message'] = '';
+
 $o_community = new Model\Community;
 
 
@@ -30,20 +33,18 @@ $o_community = new Model\Community;
             <p>
                 <form method="post" class="w3-container" action="main.php?action=newcommunity">
                 <label for="name">Nome:</label>
-                <input type="text" id="name" name="name" value="">
+                <input type="text" id="name" name="name" value="" autofocus="autofocus">
                 <br><br>
-                <label for="description">Descrição:</label>
-                <input type="text" id="description" name="description" value="">
+                <label for="description">Descrição:</label><br>
+                <textarea id="description" name="description" rows="3" cols="100"></textarea>
                 <br><br>
                 <p>Tipo de visibilidade:
                     <br>
-                    <input type="radio" id="public" name="visibility" 
-                        value="1" <?php if ($o_post->post['posVisibility'] == 1) { echo 'checked'; } ?>>
+                    <input type="radio" id="public" name="visibility" value="1" checked>
                     <label for="public">Pública</label>
                     <br>
-                    <input type="radio" id="friends" name="visibility" 
-                        value="2" <?php if ($o_post->post['posVisibility'] == 2) { echo 'checked'; } ?>>
-                    <label for="friends">Apenas amigos</label>
+                    <input type="radio" id="participants" name="visibility" value="2">
+                    <label for="participants">Apenas participantes</label>
                 </p>
                 <input type="hidden" name="admUser" value="<?php echo $userId; ?>">
                 <input type="hidden" name="status" value="1">

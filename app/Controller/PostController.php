@@ -15,9 +15,6 @@ class PostController
             Controller::mainAction();
         }
 
-        // "strip tags" e proteções
-
-
         $o_post = new Model\Post();
         $o_post->setFields($data);
 
