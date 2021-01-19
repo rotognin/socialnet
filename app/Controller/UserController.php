@@ -8,12 +8,6 @@ class UserController
 {
     static public function newUser(array $data)
     {
-        if (!Filters::commomText($data['name'])){
-            Log::message('Caracteres inválidos no nome');
-            header('Location: createuser.php');
-            exit();
-        }
-        
         if ($data['name'] == '' || $data['login'] == '' || $data['password'] == ''){
             Log::message('Existem campos em branco');
             header('Location: createuser.php');
