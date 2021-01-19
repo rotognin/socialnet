@@ -35,13 +35,6 @@ class CommunityController
         return $insertId;
     }
 
-    static public function associateUser(int $communityId, int $userId)
-    {
-        // Criar a associação da comunidade com o usuário
-
-        
-    }
-
     static public function update(array $data)
     {
         $o_community = new Model\Community($data['id']);

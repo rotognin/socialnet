@@ -3,3 +3,12 @@
 18/1/2021 13:47:44 - Não foi possível criar a comunidade.
 18/1/2021 13:49:25 - Comunidade criada com sucesso!
 18/1/2021 13:51:24 - Comunidade criada com sucesso!
+19/1/2021 8:4:17 - Comunidade criada com sucesso! ID = 4
+19/1/2021 8:9:17 - Comunidade criada com sucesso! ID = 5
+19/1/2021 8:13:26 - Comunidade criada com sucesso! ID = 6
+19/1/2021 8:33:12 - Comunidade criada com sucesso! ID = 7
+19/1/2021 8:35:28 - Comunidade criada com sucesso! ID = 8
+19/1/2021 8:36:56 - Comunidade criada com sucesso! ID = 9
+19/1/2021 8:40:59 - Comunidade criada com sucesso! ID = 10
+19/1/2021 8:45:24 - Comunidade criada com sucesso! ID = 11
+19/1/2021 8:47:48 - Comunidade criada com sucesso! ID = 12

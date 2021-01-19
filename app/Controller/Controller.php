@@ -90,9 +90,9 @@ class Controller
     static function newcommunityAction(array $data)
     {
         $communityId = CommunityController::insert($data);
-        CommunityController::associateUser($communityId, $data['admuser']);
+        $_SESSION['message'] = ParticipationController::associateUser($communityId, $data['admUser']);
 
-        self::viewAction('usercommunities', 'usertarget=' . $data['admuser']);
+        self::viewAction('usercommunities', 'usertarget=' . $data['admUser']);
     }
 
     /**

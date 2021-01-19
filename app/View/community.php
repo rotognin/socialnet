@@ -19,8 +19,6 @@ $_SESSION['message'] = '';
 
 $o_community = new Model\Community;
 
-
-
 ?>
 
 <!DOCTYPE html>

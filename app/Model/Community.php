@@ -146,50 +146,54 @@ class Community
         switch ($typeList)
         {
             case COM_TL_ALL:
+                $sql .= 'ORDER BY comId ' . $orderBy;
                 break;
             case COM_TL_IDCOMMUNITY:
-                $sql .= 'WHERE comId = :comId ';
+                $sql .= 'WHERE comId = :comId ORDER BY comId ' . $orderBy;
                 break;
             case COM_TL_USERPARTICIPATE:
-                $sql .= 'WHERE comId = (SELECT parIdCommunity FROM participations_tb WHERE parIdUser = :parIdUser) ';
+                // Montar query específica para esse tipo de consulta
+                $sql = 'SELECT par.parIdCommunity, par.parSituation, com.comId, com.comName, ' .
+                       'com.comDescription, com.comStatus, com.comAdmUser ' .
+                       'FROM participations_tb par ' .
+                       'LEFT JOIN communities_tb com on par.parIdCommunity = com.comId ' .
+                       'WHERE par.parIdUser = :parIdUser ORDER BY com.comId ' . $orderBy;
                 break;
             case COM_TL_USERCREATE:
-                $sql .= 'WHERE comAdmUser = :comAdmUser ';
+                $sql .= 'WHERE comAdmUser = :comAdmUser ORDER BY com.comId ' . $orderBy;
                 break;
             case COM_TL_SEARCHBYNAME:
                 if (strlen($comName) < 3){
                     return array();
                 }
 
-                $sql .= 'WHERE comName like :comName ';
+                $sql .= 'WHERE comName like :comName ORDER BY com.comId ' . $orderBy;
                 break;
         }
 
-        $sql .= 'ORDER BY comId ' . $orderBy;
-
-        $prepare = Connection::getConnection()->prepare($sql);
+        $prepared = Connection::getConnection()->prepare($sql);
 
         switch ($typeList)
         {
             case COM_TL_ALL:
                 break;
             case COM_TL_IDCOMMUNITY:
-                $prepare->bindValue('comId', $comId, \PDO::PARAM_INT);
+                $prepared->bindValue('comId', $comId, \PDO::PARAM_INT);
                 break;
             case COM_TL_USERPARTICIPATE:
-                $prepare->bindValue('parIdUser', $userId, \PDO::PARAM_INT);
+                $prepared->bindValue('parIdUser', $userId, \PDO::PARAM_INT);
                 break;
             case COM_TL_USERCREATE:
-                $prepare->bindValue('comAdmUser', $userId, \PDO::PARAM_INT);
+                $prepared->bindValue('comAdmUser', $userId, \PDO::PARAM_INT);
                 break;
             case COM_TL_SEARCHBYNAME:
-                $prepare->bindValue('comName', '%' . $comName . '%', \PDO::PARAM_STR);
+                $prepared->bindValue('comName', '%' . $comName . '%', \PDO::PARAM_STR);
                 break;
         }
 
-        $prepare->execute();
+        $prepared->execute();
 
-        return $prepare->fetchAll();
+        return $prepared->fetchAll();
     }
 
 }
