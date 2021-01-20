@@ -22,7 +22,7 @@ if ($communityId == 0) {
 
 $o_community = new Model\Community($communityId);
 
-$userIsAdmin = ($userId == $communityId->community['comAdmUser']);
+$userIsAdmin = ($userId == $o_community->community['comAdmUser']);
 
 ?>
 
@@ -32,17 +32,20 @@ $userIsAdmin = ($userId == $communityId->community['comAdmUser']);
 <body>
     <div class="w3-container w3-card-4">
         <header class="w3-container w3-light-grey">
-            <h3><?php echo $communityId->community['comName']; ?></h3>
+            <h3><?php echo $o_community->community['comName']; ?></h3>
             <?php if ($userIsAdmin) { echo ' - <i>Administrador</i>'; } ?>
         
             <div class="w3-container w3-padding">
-                <i><?php echo $communityId->community['comDescricao']; ?></i>
+                <i><?php echo $o_community->community['comDescription']; ?></i>
             </div>
         </header>
-        
     </div>
-    
-    <p><a href="socialnet.php?view=usercommunities">Voltar</a></p>
+    <div class="w3-container w3-card-4">
+        <a class="w3-button w3-blue w3-margin" href="main.php?action=newcommunitypost">Nova Postagem</a>
+        
+        <!-- Verificar essa volta... -->
+        <a class="w3-button w3-blue w3-margin" href="main.php?action=usercommunities">Voltar</a>
+    </div>
 
     <!-- Carregar as postagens da comunidade, mostrando a mais recente primeiro -->
 
