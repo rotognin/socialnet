@@ -133,6 +133,14 @@ class Controller
     }
 
     /**
+     * Entrar em uma comunidade
+     */
+    static function showcommunityAction(array $postData, array $getData)
+    {
+        self::viewAction('showcommunity', 'comId=' . $getData['comId']);
+    }
+
+    /**
      * Passa o controle para a View
      */
     static function viewAction(string $view, string $addGet = '')

@@ -13,7 +13,39 @@ if ($userId == 0) {
     exit();
 }
 
+$communityId = (isset($_GET['comId']) && $_GET['comId'] > 0) ? $_GET['comId'] : 0;
 
+if ($communityId == 0) {
+    header('Location: socialnet.php?view=usercommunities&usertarget=' . $userId);
+    Exit();
+}
+
+$o_community = new Model\Community($communityId);
+
+$userIsAdmin = ($userId == $communityId->community['comAdmUser']);
 
 ?>
 
+<!DOCTYPE html>
+<html>
+<?php include 'html' . DIRECTORY_SEPARATOR . 'head.php'; ?>
+<body>
+    <div class="w3-container w3-card-4">
+        <header class="w3-container w3-light-grey">
+            <h3><?php echo $communityId->community['comName']; ?></h3>
+            <?php if ($userIsAdmin) { echo ' - <i>Administrador</i>'; } ?>
+        
+            <div class="w3-container w3-padding">
+                <i><?php echo $communityId->community['comDescricao']; ?></i>
+            </div>
+        </header>
+        
+    </div>
+    
+    <p><a href="socialnet.php?view=usercommunities">Voltar</a></p>
+
+    <!-- Carregar as postagens da comunidade, mostrando a mais recente primeiro -->
+
+    <div><?php echo $message; ?></div>
+</body>
+</html>
