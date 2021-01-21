@@ -26,8 +26,77 @@ class communitypost
             $prepared->bindValue('cpoId', $this->communityPost['cpoId'], \PDO::PARAM_INT);
             $prepared->execute();
 
-            // Continuar... pegar o resultado e chamar o loadArray
-
+            $result = $prepared->fetchAll();
+            if (!is_null($result)){
+                $this->loadArray($result[0]);
+            }
         }
+    }
+
+    public function loadArray(array $communityPostData)
+    {
+        foreach ($communityPostData as $field => $value)
+        {
+            $this->communityPost[$field] = $value;
+        }
+    }
+
+    public function write()
+    {
+        $sql = 'INSERT INTO communityposts_tb (cpoIdCommunity, cpoIdUser, cpoText) ' .
+               'VALUES (:cpoIdCommunity, :cpoIdUser, :cpoText)';
+
+        $connection = Connection::getConnection();
+        $prepared = $connection->prepare($sql);
+        $arrayExec = array('cpoIdCommunity' => $this->communityPost['cpoIdCommunity'],
+                           'cpoIdUser'      => $this->communityPost['cpoIdUser'],
+                           'cpoText'        => $this->communityPost['cpoText']);
+
+        foreach ($arrayExec as $key => $value)
+        {
+            if (is_int($value)){
+                $prepared->bindValue($key, $value, \PDO::PARAM_INT);
+            } else {
+                $prepared->bindValue($key, $value);
+            }
+        }
+
+        $prepared->execute();
+        return $connection->lastinsertid();
+    }
+
+    public function setFields(array $data)
+    {
+        foreach ($data as $key => $value)
+        {
+            // "Key name modifier"
+            $key = 'cpo' . ucfirst($key);
+
+            if (array_key_exists($key, $this->communityPosts)){
+                $this->communityPosts[$key] = $value;
+            }
+        }
+    }
+
+    /**
+     * Listar postagens de uma comunidade específica
+     */
+    public function listPosts(int $communityId)
+    {
+        if (!is_int($communityId)){
+            return false;
+        }
+
+        $sql = 'SELECT cpo.cpoId, com.comId, com.comName, com.comDescription, usu.usuId, usu.usuName, ' .
+               'cpo.cpoDate, cpo.cpoText FROM communityposts_tb cpo ' .
+               'LEFT JOIN communities_tb com ON com.comId = cpo.cpoIdCommunity ' .
+               'LEFT JOIN users_tb usu ON usu.usuId = cpo.cpoIdUser ' .
+               'WHERE com.comId = :communityId ORDER BY cpo.cpoId ASC';
+
+        $prepared = Connection::getConnection()->prepare($sql);
+        $prepared->bindValue('communityId', $communityId, \PDO::PARAM_INT);
+        $prepared->execute();
+
+        return $prepared->fetchAll();
     }
 }
