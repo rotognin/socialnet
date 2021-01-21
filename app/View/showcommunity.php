@@ -20,6 +20,9 @@ if ($communityId == 0) {
     Exit();
 }
 
+$userTarget = (isset($_SESSION['userTarget']) && $_SESSION['userTarget'] > 0) ? $_SESSION['userTarget'] : $userId;
+$_SESSION['userTarget'] = 0;
+
 $o_community = new Model\Community($communityId);
 
 $userIsAdmin = ($userId == $o_community->community['comAdmUser']);
@@ -41,14 +44,14 @@ $userIsAdmin = ($userId == $o_community->community['comAdmUser']);
         </header>
     </div>
     <div class="w3-container w3-card-4">
-        <a class="w3-button w3-blue w3-margin" href="main.php?action=newcommunitypost">Nova Postagem</a>
+        <a class="w3-button w3-blue w3-margin" href="main.php?action=newcommunitypost&communityId=<?php echo $communityId; ?>">Nova Postagem</a>
         
         <!-- Verificar essa volta... -->
-        <a class="w3-button w3-blue w3-margin" href="main.php?action=usercommunities">Voltar</a>
+        <a class="w3-button w3-blue w3-margin" href="main.php?action=listcommunities&usertarget=<?php echo $userTarget; ?>">Voltar</a>
     </div>
 
     <!-- Carregar as postagens da comunidade, mostrando a mais recente primeiro -->
 
-    <div><?php echo $message; ?></div>
+   
 </body>
 </html>

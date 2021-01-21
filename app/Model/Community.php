@@ -69,7 +69,6 @@ class Community
 
         $prepared->execute();
         return $connection->lastinsertid();
-        //return ($prepared->rowCount() > 0);
     }
 
     public function rewrite(array $data)

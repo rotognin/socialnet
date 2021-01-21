@@ -21,6 +21,8 @@ if ($userTarget == 0) {
     exit();
 }
 
+$_Session['userTarget'] = $userTarget;
+
 $message = $_SESSION['message'];
 $_SESSION['message'] = '';
 

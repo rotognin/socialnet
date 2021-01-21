@@ -12,3 +12,12 @@
 19/1/2021 8:40:59 - Comunidade criada com sucesso! ID = 10
 19/1/2021 8:45:24 - Comunidade criada com sucesso! ID = 11
 19/1/2021 8:47:48 - Comunidade criada com sucesso! ID = 12
+21/1/2021 7:28:31 - 0 - insertuserpost - Nova postagem pessoal
+21/1/2021 7:29:29 - posUser - 1
+21/1/2021 7:29:29 - posVisibility - 1
+21/1/2021 7:29:29 - posText - Olá mundo.
+Essa é a minha primeira postagem aqui e gostaria de dizer que essa rede social é bacana.
+Porém, como essa postagem está restrita a um banco de dados local, não irá ser vista por ninguém, além do próprio dono da rede social.
+Isso veremos...
+21/1/2021 7:29:29 - Postagem cadastrada com sucesso!
+21/1/2021 7:30:30 - 0 - insertuserpost - Nova postagem pessoal

@@ -96,6 +96,14 @@ class Controller
     }
 
     /**
+     * Nova postagem em uma comunidade
+     */
+    static function newcommunitypostAction(array $postData, array $getData)
+    {
+        self::viewAction('communitypost', 'communityId=' . $getData['communityId']);
+    }
+
+    /**
      * Perfil do usuário logado
      */
     static function profileAction()

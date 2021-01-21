@@ -10,28 +10,14 @@ if ($userId == 0) {
     exit();
 }
 
-// Carregar o usuário logado
-$o_user = new Model\User($userId);
+$communityId = $_GET['communityId'];
 
-// Checar se a postagem está sendo inserida ou alterada
-$posId = (isset($_GET['posId'])) ? $_GET['posId'] : 0;
-$postAction = ($posId > 0) ? 'updateuserpost' : 'insertuserpost';
-$postHead = ($posId == 0) ? 'Nova postagem pessoal' : 'Editar postagem';
+$o_community = new Model\Community($communityId);
 
-// Se for edição de postagem, carregar o texto do banco para edição...
-$o_post = new Model\Post($posId);
-if ($posId == 0) { $o_post->post['posVisibility'] = 1; }
+$postAction = 'insertcommunitypost';
 
 $message = (isset($_SESSION['message']) && $_SESSION['message'] != '') ? $_SESSION['message'] : '';
 $_SESSION['message'] = '';
-
-// Se o Post não for do usuário que a estiver vendo, dar mensagem
-if ($o_post->post['posUser'] > 0 && $o_post->post['posUser'] != $userId){
-    $message = 'Essa postagem pertence a outro usuário.';
-    Controller\Controller::mainAction();
-}
-
-Controller\Log::write($posId . ' - ' . $postAction . ' - ' . $postHead);
 
 ?>
 
@@ -40,10 +26,10 @@ Controller\Log::write($posId . ' - ' . $postAction . ' - ' . $postHead);
 <?php include 'html' . DIRECTORY_SEPARATOR . 'head.php'; ?>
 <body>
     <div class="w3-container w3-card-4 w3-margin">
-        <header class="w3-container w3-light-grey w3-margin-top"><h3><?php echo $postHead; ?></h3></header>
+        <header class="w3-container w3-light-grey w3-margin-top"><h3>Nova postagem na comunidade:</h3></header>
+        <p><i><?php echo $o_community->community['comName']; ?></i></p>
         <div class="w3-container">
             <p>
-            <h3><?php echo $o_user->user['usuName']; ?></h3>
             <form method="post" class="w3-container" 
                 action="main.php?action=<?php echo $postAction; ?>">
 
