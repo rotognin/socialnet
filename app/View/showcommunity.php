@@ -27,6 +27,9 @@ $o_community = new Model\Community($communityId);
 
 $userIsAdmin = ($userId == $o_community->community['comAdmUser']);
 
+$communityPosts = Model\CommunityPost::listPosts($communityId);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -50,8 +53,25 @@ $userIsAdmin = ($userId == $o_community->community['comAdmUser']);
         <a class="w3-button w3-blue w3-margin" href="main.php?action=listcommunities&usertarget=<?php echo $userTarget; ?>">Voltar</a>
     </div>
 
-    <!-- Carregar as postagens da comunidade, mostrando a mais recente primeiro -->
+    <!-- Exibir os participantes da comunidade em quadros, dividindo a página em 3 colunas -->
 
+
+    <!-- Exibir as postagens da comunidade, mostrando a mais recente primeiro -->
+    <div class="w3-container w3-padding">
+        <h3>Postagens</h3>
+        <?php 
+            foreach ($communityPosts as $post)
+            {
+                echo '<div class="w3-container w3-padding">';
+                echo '<p>';
+                echo '<b>' . $post['usuName'] . ' - ' . $post['cpoDate'] . '</b><br>';
+                echo nl2br($post['cpoText']);
+                echo '</p>';
+                echo '<a class="w3-button w3-tiny w3-blue" href="main.php?action=replypost&post=' . $post['cpoId'] . '">Responder</a>';
+                echo '</div>';
+            }
+        ?>
+     </div>
    
 </body>
 </html>

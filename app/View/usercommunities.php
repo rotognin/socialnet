@@ -39,7 +39,7 @@ $titlePage = ($sameUser) ? 'Minhas Comunidades' : 'Comunidades de ' . Model\User
 <html>
 <?php include 'html' . DIRECTORY_SEPARATOR . 'head.php'; ?>
 <body>
-    <div class="w3-container w3-card-4 w3-margin">
+    <div class="w3-container w3-margin">
         <header class="w3-container w3-light-grey"><h3><?php echo $titlePage; ?></h3></header>
         <?php
            if ($sameUser) {
@@ -47,7 +47,10 @@ $titlePage = ($sameUser) ? 'Minhas Comunidades' : 'Comunidades de ' . Model\User
                echo '<a class="w3-button w3-blue w3-margin" href="main.php?action=createcommunity">Criar Comunidade</a>';
            }
         ?>
+        <a class="w3-button w3-blue w3-margin" href="socialnet.php?view=index">Voltar</a>
+
         <div class="w3-container">
+        
         <?php 
             foreach($userCommunities as $community){
                 $html  = '';
@@ -57,8 +60,9 @@ $titlePage = ($sameUser) ? 'Minhas Comunidades' : 'Comunidades de ' . Model\User
                 echo $html;
             }
         ?>
-        <p><a href="socialnet.php?view=index">Voltar</a></p>
+        
+        </div>
+        <div><?php echo $message; ?></div>
     </div>
-    <div><?php echo $message; ?></div>
 </body>
 </html>

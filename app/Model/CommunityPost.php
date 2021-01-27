@@ -2,14 +2,14 @@
 
 namespace app\Model;
 
-class communitypost
+class CommunityPost
 {
     public $communityPost = array(
-        'cpoId' => 0,
+        'cpoId'          => 0,
         'cpoIdCommunity' => 0,
-        'cpoIdUser' => 0,
-        'cpoDate' => 0,
-        'cpoText' => ''
+        'cpoIdUser'      => 0,
+        'cpoDate'        => 0,
+        'cpoText'        => ''
     );
 
     public function __construct(int $cpoId = 0)
@@ -72,8 +72,8 @@ class communitypost
             // "Key name modifier"
             $key = 'cpo' . ucfirst($key);
 
-            if (array_key_exists($key, $this->communityPosts)){
-                $this->communityPosts[$key] = $value;
+            if (array_key_exists($key, $this->communityPost)){
+                $this->communityPost[$key] = $value;
             }
         }
     }
@@ -81,7 +81,7 @@ class communitypost
     /**
      * Listar postagens de uma comunidade específica
      */
-    public function listPosts(int $communityId)
+    static public function listPosts(int $communityId)
     {
         if (!is_int($communityId)){
             return false;
@@ -91,7 +91,7 @@ class communitypost
                'cpo.cpoDate, cpo.cpoText FROM communityposts_tb cpo ' .
                'LEFT JOIN communities_tb com ON com.comId = cpo.cpoIdCommunity ' .
                'LEFT JOIN users_tb usu ON usu.usuId = cpo.cpoIdUser ' .
-               'WHERE com.comId = :communityId ORDER BY cpo.cpoId ASC';
+               'WHERE com.comId = :communityId ORDER BY cpo.cpoId DESC';
 
         $prepared = Connection::getConnection()->prepare($sql);
         $prepared->bindValue('communityId', $communityId, \PDO::PARAM_INT);

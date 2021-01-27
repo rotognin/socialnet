@@ -104,6 +104,14 @@ class Controller
     }
 
     /**
+     * Gravar postagem em uma página
+     */
+    static function insertcommunitypostAction(array $data)
+    {
+        CommunityPostController::insert($data);
+    }
+
+    /**
      * Perfil do usuário logado
      */
     static function profileAction()

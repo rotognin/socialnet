@@ -11,8 +11,11 @@ if ($userId == 0) {
 }
 
 $communityId = $_GET['communityId'];
-
 $o_community = new Model\Community($communityId);
+
+// Se for editar a postagem, trazer o ID da postagem
+$cpoId = 0;
+$o_communityPost = new Model\CommunityPost($cpoId);
 
 $postAction = 'insertcommunitypost';
 
@@ -33,27 +36,12 @@ $_SESSION['message'] = '';
             <form method="post" class="w3-container" 
                 action="main.php?action=<?php echo $postAction; ?>">
 
-                <label for="post">Postagem:</label><br>
-                <textarea id="post" name="text" rows="10" cols="100" autofocus="autofocus"><?php echo $o_post->post['posText']; ?></textarea>
-                <br><br>
-                <p>Tipo de visibilidade:
-                    <br>
-                    <input type="radio" id="public" name="visibility" 
-                        value="1" <?php if ($o_post->post['posVisibility'] == 1) { echo 'checked'; } ?>>
-                    <label for="public">Pública</label>
-                    <br>
-                    <input type="radio" id="friends" name="visibility" 
-                        value="2" <?php if ($o_post->post['posVisibility'] == 2) { echo 'checked'; } ?>>
-                    <label for="friends">Apenas amigos</label>
-                    <br>
-                    <input type="radio" id="particular" name="visibility" 
-                        value="3" <?php if ($o_post->post['posVisibility'] == 3) { echo 'checked'; } ?>>
-                    <label for="particular">Particular</label>
-                </p>
+                <label for="text">Postagem:</label><br>
+                <textarea id="text" name="text" rows="10" cols="100" autofocus="autofocus"><?php echo $o_communityPost->communityPost['cpoText']; ?></textarea>
                 <br>
-                <input type="hidden" name="target" value="post">
-                <input type="hidden" name="user" value="<?php echo $userId; ?>">
-                <input type="hidden" name="id" value="<?php echo $o_post->post['posId']; ?>">
+                <input type="hidden" name="target" value="communitypost">
+                <input type="hidden" name="idUser" value="<?php echo $userId; ?>">
+                <input type="hidden" name="idCommunity" value="<?php echo $o_community->community['comId'] ?>">
                 <input type="submit" value="Gravar" class="w3-button w3-blue">
                 <p><a href="socialnet.php?view=index">Voltar</a></p>
             </form>
