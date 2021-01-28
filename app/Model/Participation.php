@@ -46,7 +46,7 @@ class Participation
     }
 
     /**
-     * Listar todas as comunidades de um usuário
+     * Listar todas as comunidades que um usuário participa
      */
     public function listCommunities(int $userId)
     {
@@ -55,6 +55,23 @@ class Participation
         $prepared->bindValue('parUserId', $userId, \PDO::PARAM_INT);
         $prepared->execute();
 
-        return $prepared->fetch_all();
+        return $prepared->fetchAll();
+    }
+
+    /**
+     * Listar todos os usuários de uma comunidade que estejam ativos nela
+     */
+    static public function listParticipants(int $communityId)
+    {
+        $sql = 'SELECT u.usuId, u.usuName, u.usuCity, u.usuState, p.parSituation, c.comAdmUser ' .
+               'FROM users_tb u ' .
+               'LEFT JOIN participations_tb p ON p.parIdUser = u.usuId ' .
+               'LEFT JOIN communities_tb c ON p.parIdCommunity = c.comId ' .
+               'WHERE p.parIdCommunity = :parIdCommunity AND p.parSituation = 1';
+        $prepared = Connection::getConnection()->prepare($sql);
+        $prepared->bindValue('parIdCommunity', $communityId, \PDO::PARAM_INT);
+        $prepared->execute();
+
+        return $prepared->fetchAll();
     }
 }

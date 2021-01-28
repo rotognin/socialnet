@@ -21,7 +21,7 @@ if ($userTarget == 0) {
     exit();
 }
 
-$_Session['userTarget'] = $userTarget;
+$_SESSION['userTarget'] = $userTarget;
 
 $message = $_SESSION['message'];
 $_SESSION['message'] = '';
@@ -55,7 +55,13 @@ $titlePage = ($sameUser) ? 'Minhas Comunidades' : 'Comunidades de ' . Model\User
             foreach($userCommunities as $community){
                 $html  = '';
                 $html .= '<div class="w3-container w3-card-4 w3-padding w3-hover-light-grey">';
-                $html .= 'ID: ' . $community['comId'] . ' - Nome: <b><a href="main.php?action=showcommunity&comId=' . $community['comId'] . '">' . $community['comName'] . '</a></b><br>';
+                $html .= 'ID: ' . $community['comId'] . ' - Nome: <b><a href="main.php?action=showcommunity&comId=' . $community['comId'] . '">' . $community['comName'] . '</a></b>';
+
+                if ($community['comAdmUser'] == $userTarget){
+                    $html .= '<i> - Administrador</i>';
+                }
+
+                $html .= '<br>';
                 $html .= 'Descrição: <i>' . nl2br($community['comDescription']) . '</i></div><br>';
                 echo $html;
             }
