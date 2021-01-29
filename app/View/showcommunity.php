@@ -28,6 +28,9 @@ if (!$userIsAdmin){
 
 $isActive = ($o_community->community['comStatus'] == 1);
 
+$message = (isset($_SESSION['message'])) ? $_SESSION['message'] : '';
+$_SESSION['message'] = '';
+
 ?>
 
 <!DOCTYPE html>
@@ -46,6 +49,9 @@ $isActive = ($o_community->community['comStatus'] == 1);
             </div>
         </header>
     </div>
+
+    <?php include_once 'public/include/mensagem.php'; ?>
+
     <div class="w3-container w3-card-4">
 
         <!-- Se o usuário não faz parte da comunidade, exibir o botão "Participar" -->

@@ -15,7 +15,7 @@ Para não ficar sem css algum, estou utilizando o w3.css da w3schools.com por se
 
 <h3>Próximos passos:</h3>
 
-1. Fazer um usuário participar de uma comunidade
+1. (OK) Fazer um usuário participar de uma comunidade
 2. Criar a página de usuários/amigos (adicionar como amigo, desfazer amizade)
 3. Deixar recados para os amigos
 4. Fazer a parte das respostas das postagens

@@ -90,7 +90,14 @@ class Controller
     static function newcommunityAction(array $data)
     {
         $communityId = CommunityController::insert($data);
-        $_SESSION['message'] = ParticipationController::associateUser($communityId, $data['admUser']);
+
+        $return = '';
+        if (ParticipationController::associateUser($communityId, $data['admUser'])){
+            $return = 'Comunidade criada com sucesso.';
+        } else {
+            $return = 'Não foi possível criar a comunidade.';
+        }
+        $_SESSION['message'] = $return;
 
         self::viewAction('usercommunities', 'usertarget=' . $data['admUser']);
     }
@@ -162,6 +169,18 @@ class Controller
     static function communitysearchAction()
     {
         self::viewAction('communitysearch');
+    }
+
+    /**
+     * Participar de uma comunidade
+     */
+    static function participateAction(array $postData, array $getData)
+    {
+        $userId      = $_SESSION['userId'];
+        $communityId = $getData['communityId'];
+
+        ParticipationController::associateUser($communityId, $userId);
+        self::viewAction('showcommunity', 'comId=' . $communityId);
     }
 
     /**

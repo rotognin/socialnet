@@ -27,8 +27,6 @@ class ParticipationController
         $idParticipation = $o_participation->write($data);
 
         $returnMessage = '';
-        $returnMessage = (is_int($idParticipation)) ? 'Comunidade criada com sucesso.' : 'Comunidade não foi criada';
-
-        return $returnMessage;
+        return (is_int($idParticipation));
     }
 }
