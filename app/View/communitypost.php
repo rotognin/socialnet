@@ -3,13 +3,6 @@
 use app\Model as Model;
 use app\Controller as Controller;
 
-$userId = (isset($_SESSION['userId']) && $_SESSION['userId'] > 0) ? $_SESSION['userId'] : 0;
-
-if ($userId == 0) {
-    header('Location: index.php');
-    exit();
-}
-
 $communityId = $_GET['communityId'];
 $o_community = new Model\Community($communityId);
 

@@ -48,7 +48,7 @@ $o_community = new Model\Community;
                 <input type="hidden" name="status" value="1">
                 <input type="hidden" name="acceptance" value="1">
                 <input type="submit" value="Gravar" class="w3-button w3-blue">
-                <p><a href="socialnet.php?view=index">Voltar</a></p>
+                <p><a onclick="goBack();" href="#">Voltar</a></p>
             </form>
             </p>
         </div>

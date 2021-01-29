@@ -87,7 +87,7 @@ class CommunityPost
             return false;
         }
 
-        $sql = 'SELECT cpo.cpoId, com.comId, com.comName, com.comDescription, usu.usuId, usu.usuName, ' .
+        $sql = 'SELECT cpo.cpoId, com.comId, com.comName, com.comDescription, com.comStatus, usu.usuId, usu.usuName, ' .
                'cpo.cpoDate, cpo.cpoText FROM communityposts_tb cpo ' .
                'LEFT JOIN communities_tb com ON com.comId = cpo.cpoIdCommunity ' .
                'LEFT JOIN users_tb usu ON usu.usuId = cpo.cpoIdUser ' .

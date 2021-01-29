@@ -74,4 +74,21 @@ class Participation
 
         return $prepared->fetchAll();
     }
+
+    /**
+     * Verificar se um usuário está participando de uma comunidade
+     */
+    static public function isParticipating(int $userId, int $communityId)
+    {
+        $sql = '';
+        $sql = 'SELECT p.parId FROM participations_tb p ' .
+               'WHERE p.parIdUser = :parIdUser AND p.parIdCommunity = :parIdCommunity';
+        $prepared = Connection::getConnection()->prepare($sql);
+        $prepared->bindValue('parIdUser', $userId, \PDO::PARAM_INT);
+        $prepared->bindValue('parIdCommunity', $communityId, \PDO::PARAM_INT);
+        $prepared->execute();
+
+        return ($prepared->rowCount() > 0);
+
+    }
 }

@@ -84,7 +84,7 @@ class Controller
 
     static function createcommunityAction()
     {
-        self::viewAction('community');
+        self::viewAction('newcommunity');
     }
 
     static function newcommunityAction(array $data)
@@ -154,6 +154,14 @@ class Controller
     static function showcommunityAction(array $postData, array $getData)
     {
         self::viewAction('showcommunity', 'comId=' . $getData['comId']);
+    }
+
+    /**
+     * Buscar comunidades
+     */
+    static function communitysearchAction()
+    {
+        self::viewAction('communitysearch');
     }
 
     /**

@@ -18,6 +18,11 @@ const COM_TL_IDCOMMUNITY = 2;
 const COM_TL_USERPARTICIPATE = 3;
 const COM_TL_USERCREATE = 4;
 const COM_TL_SEARCHBYNAME = 5;
+const COM_TL_USERNOTPARTICIPATING = 6;
+
+echo '<script type="application/javascript">';
+include_once __DIR__ . DS . 'functions.js';
+echo '</script>';
 
 function autoload($class)
 {   

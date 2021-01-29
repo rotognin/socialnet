@@ -136,6 +136,7 @@ class Community
      * 3 - Listar todas que um usuário participa;
      * 4 - Listar todas as criadas por um usuário específico;
      * 5 - Pesquisar por parte do nome;
+     * 6 - Listar as comunidades que o usuário não participa;
      */
     public function list(int $typeList, int $comId = 0, int $userId = 0, string $comName = '', string $orderBy = 'ASC')
     {
@@ -147,9 +148,11 @@ class Community
             case COM_TL_ALL:
                 $sql .= 'ORDER BY comId ' . $orderBy;
                 break;
+
             case COM_TL_IDCOMMUNITY:
                 $sql .= 'WHERE comId = :comId ORDER BY comId ' . $orderBy;
                 break;
+
             case COM_TL_USERPARTICIPATE:
                 // Montar query específica para esse tipo de consulta
                 $sql = 'SELECT par.parIdCommunity, par.parSituation, com.comId, com.comName, ' .
@@ -158,15 +161,27 @@ class Community
                        'LEFT JOIN communities_tb com on par.parIdCommunity = com.comId ' .
                        'WHERE par.parIdUser = :parIdUser ORDER BY com.comId ' . $orderBy;
                 break;
+
             case COM_TL_USERCREATE:
                 $sql .= 'WHERE comAdmUser = :comAdmUser ORDER BY com.comId ' . $orderBy;
                 break;
+
             case COM_TL_SEARCHBYNAME:
                 if (strlen($comName) < 3){
                     return array();
                 }
 
                 $sql .= 'WHERE comName like :comName ORDER BY com.comId ' . $orderBy;
+                break;
+
+            case COM_TL_USERNOTPARTICIPATING:
+                // Montar query específica
+                $sql = 'SELECT c.comId, c.comName, c.comStatus, c.comDescription, c.comDateCreation, ' . 
+                       'u.usuName, u.usuId FROM communities_tb c ' .
+                       'LEFT JOIN users_tb u ON c.comAdmUser = u.usuId ' .
+                       'WHERE (SELECT COUNT(*) FROM participations_tb ' . 
+                              'WHERE parIdUser = :parIdUser AND parIdCommunity = c.comId) = 0 AND ' .
+                        'c.comStatus = 1 ORDER BY c.comId ' . $orderBy;
                 break;
         }
 
@@ -188,11 +203,13 @@ class Community
             case COM_TL_SEARCHBYNAME:
                 $prepared->bindValue('comName', '%' . $comName . '%', \PDO::PARAM_STR);
                 break;
+            case COM_TL_USERNOTPARTICIPATING:
+                $prepared->bindValue('parIdUser', $userId, \PDO::PARAM_INT);
+                break;
         }
 
         $prepared->execute();
 
         return $prepared->fetchAll();
     }
-
 }

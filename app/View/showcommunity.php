@@ -5,14 +5,6 @@
  */
 use app\Model as Model;
 
-// Usuário logado
-$userId = (isset($_SESSION['userId']) && $_SESSION['userId'] > 0) ? $_SESSION['userId'] : 0;
-
-if ($userId == 0) {
-    header('Location: index.php');
-    exit();
-}
-
 $communityId = (isset($_GET['comId']) && $_GET['comId'] > 0) ? $_GET['comId'] : 0;
 
 if ($communityId == 0) {
@@ -30,6 +22,11 @@ $userIsAdmin = ($userId == $o_community->community['comAdmUser']);
 $communityPosts       = Model\CommunityPost::listPosts($communityId);
 $comunityParticipants = Model\Participation::listParticipants($communityId);
 
+if (!$userIsAdmin){
+    $isParticipating = Model\Participation::isParticipating($userId, $communityId);
+}
+
+$isActive = ($o_community->community['comStatus'] == 1);
 
 ?>
 
@@ -40,7 +37,9 @@ $comunityParticipants = Model\Participation::listParticipants($communityId);
     <div class="w3-container w3-card-4">
         <header class="w3-container w3-light-grey">
             <h3><?php echo $o_community->community['comName']; ?></h3>
-            <?php if ($userIsAdmin) { echo ' - <i>Administrador</i>'; } ?>
+            <?php
+                if ($userIsAdmin) { echo ' - <i>Administrador</i>'; } 
+            ?>
         
             <div class="w3-container w3-padding">
                 <i><?php echo $o_community->community['comDescription']; ?></i>
@@ -48,49 +47,73 @@ $comunityParticipants = Model\Participation::listParticipants($communityId);
         </header>
     </div>
     <div class="w3-container w3-card-4">
-        <a class="w3-button w3-blue w3-margin" href="main.php?action=newcommunitypost&communityId=<?php echo $communityId; ?>">Nova Postagem</a>
+
+        <!-- Se o usuário não faz parte da comunidade, exibir o botão "Participar" -->
+        <?php
+            if ($isActive){
+                if ($isParticipating) {
+                    echo '<a class="w3-button w3-blue w3-margin" href="main.php?action=newcommunitypost&communityId=' . $communityId .'">Nova Postagem</a>';
+                } else {
+                    echo '<a class="w3-button w3-blue w3-margin" href="main.php?action=participate&communityId=' . $communityId .'">Participar da Comunidade</a>';
+                }
+            }
+        ?>
         
-        <!-- Verificar essa volta... -->
-        <a class="w3-button w3-blue w3-margin" href="main.php?action=listcommunities&usertarget=<?php echo $userTarget; ?>">Voltar</a>
+        <a class="w3-button w3-blue w3-margin" href="#" onclick="goBack();">Voltar</a>
     </div>
 
-    <!-- Exibir os participantes da comunidade em quadros, dividindo a página em 3 colunas -->
-    <div class="w3-container w3-padding">
-        <h3>Participantes:</h3>
+    <?php
+        if ($isActive){
+        ?>
+            <!-- Exibir os participantes da comunidade em quadros, dividindo a página em 3 colunas -->
+            <div class="w3-container w3-padding">
+                <h3>Participantes:</h3>
+                <?php
+                    foreach ($comunityParticipants as $participant)
+                    {
+                        echo '<div class="w3-quarter w3-container w3-padding">';
+                        echo '<p><b>' . $participant['usuName'] . '</b>';
+
+                        if ($participant['usuId'] == $participant['comAdmUser']){
+                            echo '<i> - Administrador</i>';
+                        }
+
+                        echo '<br>' . $participant['usuCity'] . ',' . $participant['usuState'] . '</p>';
+                        echo '</div>';
+                    }
+                ?>
+            </div>
+
+            <hr>
+
+            <!-- Exibir as postagens da comunidade, mostrando a mais recente primeiro -->
+            <div class="w3-container w3-padding">
+                <h3>Postagens:</h3>
+                <?php
+                    if (!$isParticipating && $o_community->community['comVisibility'] == 2){
+                        echo '<p>As postagens dessa comunidade são privadas.<br>';
+                        echo 'Apenas os participantes podem enxergá-las.</p>';
+                    } else {
+                        foreach ($communityPosts as $post)
+                        {
+                            echo '<div class="w3-half w3-container w3-padding">';
+                            echo '<p>';
+                            echo '<b>' . $post['usuName'] . ' - ' . DateTime($post['cpoDate']) . '</b><br>';
+                            echo nl2br($post['cpoText']);
+                            echo '</p>';
+                            if ($isParticipating){
+                                echo '<a class="w3-button w3-tiny w3-blue" href="main.php?action=replypost&post=' . $post['cpoId'] . '">Responder</a>';
+                            }
+                            echo '</div>';
+                        }
+                    }
+                ?>
+            </div>
         <?php
-            foreach ($comunityParticipants as $participant)
-            {
-                echo '<div class="w3-quarter w3-container w3-padding">';
-                echo '<p><b>' . $participant['usuName'] . '</b>';
+        } else {
+            echo '<p>Comunidade inativa.</p>';
+        }
+    ?>
 
-                if ($participant['usuId'] == $participant['comAdmUser']){
-                    echo '<i> - Administrador</i>';
-                }
-
-                echo '<br>' . $participant['usuCity'] . ',' . $participant['usuState'] . '</p>';
-                echo '</div>';
-            }
-        ?>
-     </div>
-
-    <hr>
-
-    <!-- Exibir as postagens da comunidade, mostrando a mais recente primeiro -->
-    <div class="w3-container w3-padding">
-        <h3>Postagens:</h3>
-        <?php 
-            foreach ($communityPosts as $post)
-            {
-                echo '<div class="w3-half w3-container w3-padding">';
-                echo '<p>';
-                echo '<b>' . $post['usuName'] . ' - ' . DateTime($post['cpoDate']) . '</b><br>';
-                echo nl2br($post['cpoText']);
-                echo '</p>';
-                echo '<a class="w3-button w3-tiny w3-blue" href="main.php?action=replypost&post=' . $post['cpoId'] . '">Responder</a>';
-                echo '</div>';
-            }
-        ?>
-     </div>
-   
 </body>
 </html>

@@ -5,21 +5,8 @@
  */
 use app\Model as Model;
 
-// Usuário logado
-$userId = (isset($_SESSION['userId']) && $_SESSION['userId'] > 0) ? $_SESSION['userId'] : 0;
-
-if ($userId == 0) {
-    header('Location: index.php');
-    exit();
-}
-
 // Usuário "alvo", de quem está listando as comunidades
-$userTarget = (isset($_GET['usertarget']) && $_GET['usertarget'] > 0) ? $_GET['usertarget'] : 0;
-
-if ($userTarget == 0) {
-    header('Location: index.php');
-    exit();
-}
+$userTarget = (isset($_GET['usertarget']) && $_GET['usertarget'] > 0) ? $_GET['usertarget'] : $userId;
 
 $_SESSION['userTarget'] = $userTarget;
 

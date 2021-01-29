@@ -7,29 +7,37 @@
 
 use app\Model as Model;
 
-// Quebrar a cabeça com um SELECT onde apareçam todas as comunidades que um usuário não participa.
-// Seguem abaixo os Selects que eu estava tentando no banco:
+$o_communities = new Model\Community();
+$communities = $o_communities->list(COM_TL_USERNOTPARTICIPATING, 0, $userId, '', 'DESC');
 
-/*
-
-SELECT u.usuId, u.usuName, u.usuCity, u.usuState, p.parSituation, c.comAdmUser 
-FROM users_tb u 
-LEFT JOIN participations_tb p ON p.parIdUser = u.usuId 
-LEFT JOIN communities_tb c ON p.parIdCommunity = c.comId 
-WHERE p.parIdCommunity = 11 AND p.parSituation = 1;
-
-SELECT c.comId, c.comName FROM communities_tb c
-LEFT JOIN participations_tb p ON p.parIdCommunity = c.comId
-WHERE p.parIdUser = 2 AND
-p.parIdUser NOT IN (SELECT parIdUser FROM participations_tb)
--- c.comId <> (SELECT  FROM participations_tb  )
-ORDER BY c.comId DESC;
-
-SELECT p.parIdCommunity, c.comName FROM participations_tb p 
-LEFT JOIN communities_tb c ON c.comId = p.parIdCommunity
-WHERE parIdUser <> 2 GROUP BY p.parIdCommunity, c.comName;
-
-*/
-
+//var_dump($communities);
 
 ?>
+
+<!DOCTYPE html>
+<html>
+<?php include 'html' . DIRECTORY_SEPARATOR . 'head.php'; ?>
+<body>
+    <div class="w3-container w3-margin">
+        <header class="w3-container w3-light-grey"><h3>Buscar Comunidades:</h3></header>
+        <a class="w3-button w3-blue w3-margin" href="socialnet.php?view=usercommunities">Voltar</a>
+
+        <div class="w3-container">
+        
+        <?php 
+            foreach($communities as $community){
+                $html  = '';
+                $html .= '<div class="w3-container w3-card-4 w3-padding w3-hover-light-grey">';
+                $html .= 'ID: ' . $community['comId'] . ' - <b><a href="main.php?action=showcommunity&comId=' . $community['comId'] . '">' . $community['comName'] . '</a></b>';
+                $html .= '<br>';
+                $html .= 'Administrada por: ' . $community['usuName'] . ' - Criada em ' . DateTime($community['comDateCreation']); 
+                $html .= '<br>';
+                $html .= 'Descrição: <i>' . nl2br($community['comDescription']) . '</i></div><br>';
+                echo $html;
+            }
+        ?>
+        
+        </div>
+    </div>
+</body>
+</html>
