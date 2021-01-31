@@ -9,15 +9,15 @@ class Controller
     /**
      * Realizar o login do usuário
      */
-    static function loginAction(array $data)
+    static function loginAction(array $dataPost)
     {
-        if ($data['login'] == '' || $data['password'] == ''){
+        if ($dataPost['login'] == '' || $dataPost['password'] == ''){
             Log::message('Login ou Senha em branco.');
             self::homeAction();
         }
 
         $o_user = new Model\User();
-        if (!$o_user->login($data['login'], $data['password'])){
+        if (!$o_user->login($dataPost['login'], $dataPost['password'])){
             self::homeAction();
         }
 
@@ -80,6 +80,12 @@ class Controller
     static function listcommunitiesAction()
     {
         self::viewAction('usercommunities', 'usertarget=' . $_SESSION['userId']);
+    }
+
+    static function listfriendsAction(array $dataPost, array $dataGet)
+    {
+        // Verificar o usuário alvo
+        self::viewAction('listfriends', 'usertarget=' . $dataGet['usertarget']);
     }
 
     static function createcommunityAction()

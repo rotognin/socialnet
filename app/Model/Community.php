@@ -17,7 +17,7 @@ class Community
         'comAdmUser'      => 0
     );
 
-    public function __construct($comId = 0)
+    public function __construct(int $comId = 0)
     {
         $this->community['comId'] = $comId;
         $this->load();

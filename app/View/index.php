@@ -29,7 +29,7 @@ $o_user = new Model\User($userId);
         <br>
         <p>
         <a class="w3-button w3-blue" href="main.php?action=profile">Perfil</a>
-        <a class="w3-button w3-blue" href="main.php?action=listfriends">Amigos</a>
+        <a class="w3-button w3-blue" href="main.php?action=listfriends&usertarget=<?php echo $o_user->user['usuId']; ?>">Amigos</a>
         <a class="w3-button w3-blue" href="main.php?action=listcommunities">Comunidades</a>
         <a class="w3-button w3-blue" href="main.php?action=logout">Sair</a>
         </p>
