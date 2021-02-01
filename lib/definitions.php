@@ -20,6 +20,14 @@ const COM_TL_USERCREATE = 4;
 const COM_TL_SEARCHBYNAME = 5;
 const COM_TL_USERNOTPARTICIPATING = 6;
 
+// Constantes para os tipos de listagens de amizades
+const FRI_TL_DONE = 1;
+const FRI_TL_PENDING_FROM = 2;
+const FRI_TL_PENDING_TO = 3;
+const FRI_TL_DENIED_TO = 4;
+const FRI_TL_DENIED_FROM = 5;
+const FR_TL_UNDONE = 6;
+
 echo '<script type="application/javascript">';
 include_once __DIR__ . DS . 'functions.js';
 echo '</script>';

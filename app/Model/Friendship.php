@@ -54,9 +54,34 @@ class Friendship
      *     "eu neguei a amizade";
      * 6 - Amizades desfeitas ($friStatus = 4, $friUserOrigin > 0 OU $friUserDestination > 0);
      */
-    static public function list(int $userTarget, int $listType = 1)
+    static public function list(int $userTarget, int $typeList = 1)
     {
         // Criar as constantes dos tipos a serem passados
         // Desenvolver a função para realizar a pesquisa no banco.
+        $sql = '';
+
+        switch ($typeList)
+        {
+            case FRI_TL_DONE:
+                $sql = 'SELECT f.friId, f.friUserOrigin, f.friUserDestination, f.friDate, f.friStatus, ' .
+                       'u1.usuNome as "usuOrigin", u2.usuNome as "usuDestination" ' .
+                       'FROM friendships_tb f ' .
+                       'LEFT JOIN users_tb u1 ON u1.usuId = f.friUserOrigin ' .
+                       'LEFT JOIN users_tb u2 ON u2.usuId = f.friUserDestination ' .
+                       'WHERE f.friStatus = 2';
+
+                       /**
+                        * SELECT f.friId, f.friUserOrigin, f.friUserDestination, f.friDate, f.friStatus, 
+                          u1.usuId, u1.usuName as "usuOrigin", u2.usuId, u2.usuName as "usuDestination" 
+                          FROM friendships_tb f 
+                          LEFT JOIN users_tb u1 ON u1.usuId = f.friUserOrigin 
+                          LEFT JOIN users_tb u2 ON u2.usuId = f.friUserDestination 
+                          WHERE f.friStatus = 2 AND (u1.usuId = 1 OR u2.usuId = 1)
+                        */
+                break;
+
+        }
+
+
     }
 }
