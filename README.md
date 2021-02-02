@@ -2,7 +2,7 @@
 <h3>Rede social simples usando o padrão MVC com PHP</h3>
 
 A ideia é criar uma rede social, em um primeiro momento, simples, com usuários e comunidades.
-Será possível enviar mensagens públicas ou provadas entre os usuários e participar 
+Será possível enviar mensagens públicas ou privadas entre os usuários e participar 
 de comunidades com assuntos específicos.
 
 Esse projeto está me servindo como um estudo de PHP seguindo o padrão MVC e demais coisas que estarei
@@ -10,6 +10,19 @@ acrescentando aos meus estudos.
 
 Inicialmente não estou me importando com o visual.
 Para não ficar sem css algum, estou utilizando o w3.css da w3schools.com por ser simples e prático.
+
+---------------------------
+
+<h3>Executar localmente</h3>
+
+Para rodar esse sistema localmente, siga esses passos:
+
+1. Baixe os fontes em uma pasta
+2. É necessário um servidor local com Php e MySQL (eu uso WAMP, mas pode ser XAMPP ou similares)
+3. No MySQL, crie um novo banco chamado <i>socialnet_db</i>
+4. Rode os scripts das tabelas que encontram-se em <i>docs\scripts</i>
+5. Configure a conexão com o banco no arquivo <i>app\Model\Connection.php</i>
+6. Execute o <i>index.php</i> da página principal.
 
 ---------------------------
 
