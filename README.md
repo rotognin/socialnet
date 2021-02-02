@@ -16,14 +16,19 @@ Para não ficar sem css algum, estou utilizando o w3.css da w3schools.com por se
 <h3>Próximos passos:</h3>
 
 1. (OK) Fazer um usuário participar de uma comunidade
-2. Criar a página de usuários/amigos (adicionar como amigo, desfazer amizade)
-3. Deixar recados para os amigos
-4. Fazer a parte das respostas das postagens
+2. (Caminhando...) Criar a página de usuários/amigos:
+    - "addfriend" - Adicionar como amigo
+    - "denyfriend" - Negar a amizade
+    - "canceladd" - Cancelar pedido de amizade
+    - "sendfriendmessage" - Enviar mensagem ao amigo
+    - "undofriendship" - Desfazer amizade
+3. Página de recados dos amigos - "listusermessages"
+4. Respostas das postagens nas comunidades
 5. Adicionar uma breve descrição para os usuários
 
 <h3>Futuras melhorias:</h3>
 
-1. Trocar as passagens por GET para SESSION
+1. Trocar as passagens de parâmetros por GET para SESSION
 2. Abstrair comandos do Model para redução e aproveitamento de código
 3. Nas views, procurar melhorar os comandos PHP antes do HTML.
     - Se for viável, retirá-los da View.

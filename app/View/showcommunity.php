@@ -71,7 +71,7 @@ $_SESSION['message'] = '';
     <?php
         if ($isActive){
         ?>
-            <!-- Exibir os participantes da comunidade em quadros, dividindo a página em 3 colunas -->
+            <!-- Exibir os participantes da comunidade em quadros, dividindo a página em 4 colunas -->
             <div class="w3-container w3-padding">
                 <h3>Participantes:</h3>
                 <?php
