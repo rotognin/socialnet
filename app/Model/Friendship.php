@@ -145,4 +145,9 @@ class Friendship
 
         return ($prepared->rowCount() > 0);
     }
+
+    public function addFriend(int $usuOrigin, int $usuDestination)
+    {
+        
+    }
 }

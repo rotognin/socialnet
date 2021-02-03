@@ -46,14 +46,14 @@ if (!$sameUser){
     <div class="w3-container w3-margin">
         <header class="w3-container w3-light-grey"><h3><?php echo $titlePage; ?></h3></header>
         <?php
-           if (!$sameUser) {
-               if ($isMyFriend){
-                   echo '<a class="w3-button w3-blue w3-margin" href="main.php?action=sendfriendmessage">Enviar mensagem</a>';
-                   echo '<a class="w3-button w3-red w3-margin" href="main.php?action=undofriendship">Desfazer Amizade</a>';
-               } else {
-                echo '<a class="w3-button w3-red w3-margin" href="main.php?action=addfriend">Adicionar Amigo</a>';
-               }
-           }
+            if (!$sameUser) {
+                if ($isMyFriend){
+                    echo '<a class="w3-button w3-blue w3-margin" href="main.php?action=sendfriendmessage">Enviar mensagem</a>';
+                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=undofriendship">Desfazer Amizade</a>';
+                } else {
+                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=addfriend&usertarget=' . $userTarget . '">Adicionar Amigo</a>';
+                }
+            }
         ?>
         <a class="w3-button w3-blue w3-margin" href="socialnet.php?view=index">Voltar</a>
 

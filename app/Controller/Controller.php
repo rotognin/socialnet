@@ -190,6 +190,19 @@ class Controller
     }
 
     /**
+     * Adicionar amigo
+     */
+    static function addfriendAction(array $dataPost, array $dataGet)
+    {
+        // Quem estiver solicitando a amizade irá ser pego da sessão
+        $usuOrigin = $_SESSION['userId'];
+        $usuDestination = $dataGet['usertarget'];
+
+        FriendshipController::addFriend($usuOrigin, $usuDestination);
+        self::viewAction('listfriends', 'usertarget=' . $dataGet['usertarget']);
+    }
+
+    /**
      * Passa o controle para a View
      */
     static function viewAction(string $view, string $addGet = '')
