@@ -65,7 +65,7 @@ $_SESSION['message'] = '';
             }
         ?>
         
-        <a class="w3-button w3-blue w3-margin" href="#" onclick="goBack();">Voltar</a>
+        <a class="w3-button w3-blue w3-margin" href="main.php?action=main" onclick="goBack();">Voltar</a>
     </div>
 
     <?php
@@ -78,13 +78,13 @@ $_SESSION['message'] = '';
                     foreach ($comunityParticipants as $participant)
                     {
                         echo '<div class="w3-quarter w3-container w3-padding">';
-                        echo '<p><b>' . $participant['usuName'] . '</b>';
+                        echo '<p><b><a href="main.php?action=viewuser&usertarget=' . $participant['usuId'] . '">' . $participant['usuName'] . '</a></b>';
 
                         if ($participant['usuId'] == $participant['comAdmUser']){
                             echo '<i> - Administrador</i>';
                         }
 
-                        echo '<br>' . $participant['usuCity'] . ',' . $participant['usuState'] . '</p>';
+                        echo '<br>' . $participant['usuCity'] . ', ' . $participant['usuState'] . '</p>';
                         echo '</div>';
                     }
                 ?>

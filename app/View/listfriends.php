@@ -34,7 +34,7 @@ $titlePage = ($sameUser) ? 'Minhas Amizades' : 'Amizades de ' . Model\User::find
 
 // Saber se o usuário alvo é meu amigo
 if (!$sameUser){
-    $isMyFriend = $o_friendship->isFriend($userId, $userTarget);
+    $isMyFriend = Model\Friendship::isFriend($userId, $userTarget);
 }
 
 ?>
@@ -89,8 +89,8 @@ if (!$sameUser){
                     echo '<b>' . $friendPendingTo['usuDestinationName'] . '</b>';
                     echo '</a>';
                     echo '<br>' . $friendPendingTo['usuDestinationCity'] . ', ' . $friendPendingTo['usuDestinationState'] . '</p>';
-                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=addfriend">Aceitar</a>';
-                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=denyfriend">Negar</a>';
+                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=acceptfriend&usertarget=' . $userTarget . '">Aceitar</a>';
+                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=denyfriend&usertarget=' . $userTarget . '">Negar</a>';
                     echo '</div>';
                 }
 
@@ -103,7 +103,7 @@ if (!$sameUser){
                     echo '<b>' . $friendPendingFrom['usuDestinationName'] . '</b>';
                     echo '</a>';
                     echo '<br>' . $friendPendingFrom['usuDestinationCity'] . ', ' . $friendPendingFrom['usuDestinationState'] . '</p>';
-                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=canceladd">Cancelar</a>';
+                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=canceladd&usertarget=' . $userTarget . '">Cancelar</a>';
                     echo '</div>';
                 }
 
@@ -116,7 +116,7 @@ if (!$sameUser){
                     echo '<b>' . $friendDeniedFrom['usuDestinationName'] . '</b>';
                     echo '</a>';
                     echo '<br>' . $friendDeniedFrom['usuDestinationCity'] . ', ' . $friendDeniedFrom['usuDestinationState'] . '</p>';
-                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=addfriend">Aceitar</a>';
+                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=acceptfriend&usertarget=' . $userTarget . '">Aceitar</a>';
                     echo '</div>';
                 }
             }

@@ -9,22 +9,29 @@ class FriendshipController
     static function addFriend(int $usuOrigin, int $usuDestination)
     {
         $o_friendship = new Model\Friendship();
-
-        // **** Pensar melhor nessa lógica, pois pode ser que o destino já
-        // tenha negado o pedido de amizade antes, ou a origem, ou a amizade
-        // tenha sido desfeita... Avaliar as condições.
-
-        // Verificar se a amizade já foi solicitada/negada/desfeita.
-        // Se a amizade já foi solicitada pelo destino à origem e está pendente, aceitar a amizade ao
-        // invés de adicionar.
-        // Deixar a amizade em aberto para quem recebeu o convite ver se aceita ou não
         $friendshipStatus = $o_friendship->checkStatus($usuOrigin, $usuDestination);
 
         if ($friendshipStatus == 0){
             // A amizade ainda não existe ou está pendente para a origem aceitar
-
+            $o_friendship->addFriend($usuOrigin, $usuDestination);
         } else {
-            // Se o status estiver como 3, 
+            switch ($friendshipStatus)
+            {
+                case 1:
+                    Log::message('O convite está pendente para aceitação.');
+                    break;
+                case 2:
+                    Log::message('A amizade já existe.');
+                    break;
+                case 3:
+                    Log::message('O pedido de amizade foi negado.');
+                    break;
+                case 4:
+                    // Por enquanto... depois ver uma forma melhor de "desnegar"
+                    // o pedido para quem negou
+                    Log::message('A amizade foi negada');
+                    break;
+            }
 
         }
 

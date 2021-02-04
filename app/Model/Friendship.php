@@ -54,7 +54,7 @@ class Friendship
      *     "eu neguei a amizade";
      * 6 - Amizades desfeitas ($friStatus = 4, $friUserOrigin > 0 OU $friUserDestination > 0);
      */
-    static public function list(int $userTarget, int $typeList = 1)
+    static function list(int $userTarget, int $typeList = 1)
     {
         // Criar as constantes dos tipos a serem passados
         // Desenvolver a função para realizar a pesquisa no banco.
@@ -130,7 +130,7 @@ class Friendship
         return $prepared->fetchAll();
     }
 
-    public function isFriend(int $user1, int $user2)
+    static function isFriend(int $user1, int $user2)
     {
         $sql = 'SELECT friUserOrigin, friUserDestination, friStatus ' .
                'FROM friendships_tb ' .
@@ -146,8 +146,73 @@ class Friendship
         return ($prepared->rowCount() > 0);
     }
 
+    static function friendSince(int $user1, int $user2)
+    {
+        $sql = 'SELECT friDate, friUserOrigin, friUserDestination, friStatus ' .
+               'FROM friendships_tb ' .
+               'WHERE (friUserOrigin = :friUser1 AND friUserDestination = :friUser2) OR ' .
+                     '(friUserOrigin = :friUser2 AND friUserDestination = :friUser1) AND ' .
+                     'friStatus = 2';
+
+        $prepared = Connection::getConnection()->prepare($sql);
+        $prepared->bindValue('friUser1', $user1, \PDO::PARAM_INT);
+        $prepared->bindValue('friUser2', $user2, \PDO::PARAM_INT);
+        $prepared->execute();
+
+        $result = $prepared->fetchAll();
+        return $result[0]['friDate'];
+    } 
+
+    public function checkStatus(int $user1, int $user2)
+    {
+        $sql = 'SELECT friId, friUserOrigin, friUserDestination, friStatus ' .
+               'FROM friendships_tb ' .
+               'WHERE (friUserOrigin = :friUser1 AND friUserDestination = :friUser2) OR ' .
+                     '(friUserOrigin = :friUser2 AND friUserDestination = :friUser1)';
+
+        $prepared = Connection::getConnection()->prepare($sql);
+        $prepared->bindValue('friUser1', $user1, \PDO::PARAM_INT);
+        $prepared->bindValue('friUser2', $user2, \PDO::PARAM_INT);
+        $prepared->execute();
+
+        $friendshipStatus = 0;
+
+        if ($prepared->rowCount() > 0){
+            $result = $prepared->fetchAll();
+            $friendshipStatus = $result[0]['friStatus'];
+
+            // Se a amizade foi desfeita, apagá-la para ser refeito o convite
+            // *** Verificar posteriormente ***
+            /*
+            if ($friendshipStatus == 4){
+                $friendshipId = $result[0]['friId'];
+                $friendshipStatus = 0;
+            }
+            */
+        }
+
+        return $friendshipStatus;
+    }
+
+    public function deleteFriendship(int $friId)
+    {
+        $sql = '';
+        $sql = 'DELETE FROM friendships_tb WHERE friUser = :friId';
+        $toDelete = Connection::getConnection()->prepare($sql);
+        $toDelete->bindValue('friId', $friendshipId, \PDO::PARAM_INT);
+        $toDelete->execute();
+    }
+
     public function addFriend(int $usuOrigin, int $usuDestination)
     {
-        
+        $sql = 'INSERT INTO friendships_tb (friUserOrigin, friUserDestination, friStatus) ' .
+               'VALUES (:friUserOrigin, :friUserDestination, 1)';
+        $connection = Connection::getConnection();
+        $prepared = $connection->prepare($sql);
+        $prepared->bindValue('friUserOrigin', $usuOrigin, \PDO::PARAM_INT);
+        $prepared->bindValue('friUserDestination', $usuDestination, \PDO::PARAM_INT);
+        $prepared->execute();
+
+        return $connection->lastinsertid();
     }
 }

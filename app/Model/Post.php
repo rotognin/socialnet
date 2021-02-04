@@ -135,6 +135,14 @@ class Post
         return ($prepared->rowCount() > 0);
     }
 
+    public function delete($posId)
+    {
+        $sql = 'DELETE FROM posts_tb WHERE posId = :posId';
+        $prepared = Connection::getConnection()->prepare($sql);
+        $prepared->bindValue('posId', $posId, \PDO::PARAM_INT);
+        $prepared->execute();
+    }
+
     public function listAll(int $userId, string $orderBy = 'ASC')
     {
         $sql = 'SELECT * FROM posts_tb WHERE posUser = :posUser ORDER BY posId ' . $orderBy;

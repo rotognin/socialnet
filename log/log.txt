@@ -21,3 +21,9 @@ Porém, como essa postagem está restrita a um banco de dados local, não irá s
 Isso veremos...
 21/1/2021 7:29:29 - Postagem cadastrada com sucesso!
 21/1/2021 7:30:30 - 0 - insertuserpost - Nova postagem pessoal
+4/2/2021 7:50:42 - 0 - insertuserpost - Nova postagem pessoal
+4/2/2021 7:50:50 - posUser - 4
+4/2/2021 7:50:50 - posVisibility - 1
+4/2/2021 7:50:50 - posText - Opa, estou falando aqui!
+4/2/2021 7:50:50 - Postagem cadastrada com sucesso!
+4/2/2021 7:50:57 - 2 - updateuserpost - Editar postagem

@@ -66,9 +66,18 @@ class Controller
     /**
      * Atualizar postagem
      */
-    static function updateuserpostAction(array $data)
+    static function updateuserpostAction(array $dataGet)
     {
-        PostController::update($data);
+        PostController::update($dataGet);
+        self::viewAction('userposts');
+    }
+
+    /**
+     * Excluir uma postagem
+     */
+    static function deleteuserpostAction(array $dataPost, array $dataGet)
+    {
+        PostController::delete($dataGet);
         self::viewAction('userposts');
     }
 
@@ -200,6 +209,14 @@ class Controller
 
         FriendshipController::addFriend($usuOrigin, $usuDestination);
         self::viewAction('listfriends', 'usertarget=' . $dataGet['usertarget']);
+    }
+
+    /**
+     * Visualizar a página de alguém
+     */
+    static function viewuserAction(array $dataPost, array $dataGet)
+    {
+        self::viewAction('viewuser', 'usertarget=' . $dataGet['usertarget']);
     }
 
     /**

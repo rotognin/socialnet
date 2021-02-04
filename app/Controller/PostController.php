@@ -10,7 +10,7 @@ class PostController
     static public function insert(array $data)
     {
         // Verificar se o conteúdo da postagem está em branco
-        if ($data['posText'] == ''){
+        if ($data['text'] == ''){
             Log::message('Texto da postagem em branco.');
             Controller::mainAction();
         }
@@ -31,5 +31,13 @@ class PostController
     {
         $o_post = new Model\Post($data['id']);
         $o_post->rewrite($data);
+    }
+
+    static public function delete(array $data)
+    {
+        $o_post = new Model\Post($data['id']);
+        if ($o_post->post['posUser'] == $_SESSION['userId']){
+            $o_post->delete($data['id']);
+        }
     }
 }

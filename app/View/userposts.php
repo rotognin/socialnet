@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Perfil do usuário logado.
+ * Postagens do usuário.
  */
 use app\Model as Model;
 
@@ -27,7 +27,7 @@ $userPosts = $o_post->listAll($userId, 'DESC');
             foreach($userPosts as $post){
                 $html  = '';
                 $html  = '<div class="w3-container w3-card-4 w3-margin w3-padding">';
-                $html .= '<a class="w3-button w3-red w3-right" href="main.php?action=deleteuserpost">Apagar</a>';
+                $html .= '<a class="w3-button w3-red w3-right" href="main.php?action=deleteuserpost&id=' . $post['posId'] . '">Apagar</a>';
                 $html .= '<a class="w3-button w3-blue w3-right w3-margin-right" href="main.php?action=edituserpost&posId=' . $post['posId'] . '">Editar</a>';
                 $html .= 'ID: ' . $post['posId'] . ' - Data: ' . DateTime($post['posDate']) . ' - ';
                 $html .= 'Visibilidade: ' . $o_post->visibilityDescription($post['posVisibility']);
