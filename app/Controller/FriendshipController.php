@@ -32,10 +32,7 @@ class FriendshipController
                     Log::message('A amizade foi negada');
                     break;
             }
-
         }
-
-
     }
 
     /**
@@ -48,5 +45,13 @@ class FriendshipController
     static function updateInvite(int $usuOrigin, int $usuDestination, int $friendshipStatus)
     {
         // 
+    }
+
+    /**
+     * Cancelar o pedido de amizade
+     */
+    static function cancelInvite(int $friId)
+    {
+        Model\Friendship::deleteFriendship($friId);
     }
 }

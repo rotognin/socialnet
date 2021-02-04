@@ -80,7 +80,7 @@ if (!$sameUser){
 
         <?php
             if ($sameUser){
-                echo '<h3>Amizades pendentes para aceitação:</h3><br>';
+                echo '<br><h3>Amizades pendentes para aceitação:</h3><br>';
 
                 foreach($friendshipsPendingTo as $friendPendingTo){
                     echo '<div class="w3-quarter w3-container w3-padding">';
@@ -94,7 +94,7 @@ if (!$sameUser){
                     echo '</div>';
                 }
 
-                echo '<h3>Convites em aberto:</h3><br>';
+                echo '<br><h3>Convites em aberto:</h3><br>';
 
                 foreach($friendshipsPendingFrom as $friendPendingFrom){
                     echo '<div class="w3-quarter w3-container w3-padding">';
@@ -103,11 +103,11 @@ if (!$sameUser){
                     echo '<b>' . $friendPendingFrom['usuDestinationName'] . '</b>';
                     echo '</a>';
                     echo '<br>' . $friendPendingFrom['usuDestinationCity'] . ', ' . $friendPendingFrom['usuDestinationState'] . '</p>';
-                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=canceladd&usertarget=' . $userTarget . '">Cancelar</a>';
+                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=cancelinvite&usertarget=' . $friendPendingFrom['usuDestinationId'] . '">Cancelar</a>';
                     echo '</div>';
                 }
 
-                echo '<h3>Amizades Negadas:</h3><br>';
+                echo '<br><h3>Amizades Negadas:</h3><br>';
 
                 foreach($friendshipsDeniedFrom as $friendDeniedFrom){
                     echo '<div class="w3-quarter w3-container w3-padding">';

@@ -22,6 +22,8 @@ $userIsAdmin = ($userId == $o_community->community['comAdmUser']);
 $communityPosts       = Model\CommunityPost::listPosts($communityId);
 $comunityParticipants = Model\Participation::listParticipants($communityId);
 
+$isParticipating = false;
+
 if (!$userIsAdmin){
     $isParticipating = Model\Participation::isParticipating($userId, $communityId);
 }

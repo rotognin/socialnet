@@ -208,7 +208,24 @@ class Controller
         $usuDestination = $dataGet['usertarget'];
 
         FriendshipController::addFriend($usuOrigin, $usuDestination);
-        self::viewAction('listfriends', 'usertarget=' . $dataGet['usertarget']);
+        self::viewAction('listfriends', 'usertarget=' . $usuOrigin);
+    }
+
+    /**
+     * Cancelar a amizade
+     */
+    static function cancelinviteAction(array $dataPost, array $dataGet)
+    {
+        $usuOrigin = $_SESSION['userId'];
+        $usuDestination = $dataGet['usertarget'];
+
+        $friendshipId = Model\Friendship::getFriendshipId($usuOrigin, $usuDestination);
+
+        if ($friendshipId > 0){
+            FriendshipController::cancelInvite($friendshipId);
+        }
+
+        self::viewAction('listfriends', 'usertarget=' . $usuOrigin);
     }
 
     /**

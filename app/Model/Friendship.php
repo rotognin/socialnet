@@ -161,7 +161,23 @@ class Friendship
 
         $result = $prepared->fetchAll();
         return $result[0]['friDate'];
-    } 
+    }
+
+    static function getFriendshipId(int $user1, int $user2)
+    {
+        $sql = 'SELECT friId, friUserOrigin, friUserDestination ' .
+               'FROM friendships_tb ' .
+               'WHERE (friUserOrigin = :friUser1 AND friUserDestination = :friUser2) OR ' .
+                     '(friUserOrigin = :friUser2 AND friUserDestination = :friUser1)';
+
+        $prepared = Connection::getConnection()->prepare($sql);
+        $prepared->bindValue('friUser1', $user1, \PDO::PARAM_INT);
+        $prepared->bindValue('friUser2', $user2, \PDO::PARAM_INT);
+        $prepared->execute();
+
+        $result = $prepared->fetchAll();
+        return $result[0]['friId'];
+    }
 
     public function checkStatus(int $user1, int $user2)
     {
@@ -194,12 +210,12 @@ class Friendship
         return $friendshipStatus;
     }
 
-    public function deleteFriendship(int $friId)
+    static function deleteFriendship(int $friId)
     {
         $sql = '';
         $sql = 'DELETE FROM friendships_tb WHERE friUser = :friId';
         $toDelete = Connection::getConnection()->prepare($sql);
-        $toDelete->bindValue('friId', $friendshipId, \PDO::PARAM_INT);
+        $toDelete->bindValue('friId', $friId, \PDO::PARAM_INT);
         $toDelete->execute();
     }
 

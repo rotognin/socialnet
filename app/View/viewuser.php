@@ -14,7 +14,7 @@ if ($userId == $userTarget || $userTarget == 0){
     exit();
 }
 
-$o_user = new Model\User($userTrget);
+$o_user = new Model\User($userTarget);
 
 $isMyFriend = Model\Friendship::isFriend($userId, $userTarget);
 
@@ -39,15 +39,16 @@ if ($isMyFriend){
         ?>
         <br>
         <p>
-        <a class="w3-button w3-blue" href="main.php?action=listfriends&usertarget=<?php echo $o_user->user['usuId']; ?>">Amigos</a>
-        <a class="w3-button w3-blue" href="main.php?action=listcommunities&usertarget=<?php echo $o_user->user['usuId']; ?>">Comunidades</a>
-        <a class="w3-button w3-blue" href="main.php?action=listposts&usertarget=<?php echo $o_user->user['usuId']; ?>">Postagens</a>
+            <a class="w3-button w3-blue" href="main.php?action=listfriends&usertarget=<?php echo $o_user->user['usuId']; ?>">Amigos</a>
+            <a class="w3-button w3-blue" href="main.php?action=listcommunities&usertarget=<?php echo $o_user->user['usuId']; ?>">Comunidades</a>
+            <a class="w3-button w3-blue" href="main.php?action=listposts&usertarget=<?php echo $o_user->user['usuId']; ?>">Postagens</a>
 
-        <?php
-            if (!$isMyFriend){
-                echo '<a class="w3-button w3-blue" href="main.php?action=addfriend&usertarget=' . $o_user->user['usuId'] . '">Amigos</a>';
-            }
-        ?>
+            <?php
+                if (!$isMyFriend){
+                    echo '<a class="w3-button w3-blue" href="main.php?action=addfriend&usertarget=' . $o_user->user['usuId'] . '">Adicionar</a>';
+                }
+            ?>
+            <a class="w3-button w3-blue" href="#" onclick="goBack();">Voltar</a>
         </p>
         <br>
     </div>
