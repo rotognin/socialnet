@@ -51,7 +51,7 @@ if (!$sameUser){
                     echo '<a class="w3-button w3-blue w3-margin" href="main.php?action=sendfriendmessage">Enviar mensagem</a>';
                     echo '<a class="w3-button w3-red w3-margin" href="main.php?action=undofriendship">Desfazer Amizade</a>';
                 } else {
-                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=addfriend&usertarget=' . $userTarget . '">Adicionar Amigo</a>';
+                    echo '<a class="w3-button w3-blue w3-margin" href="main.php?action=addfriend&usertarget=' . $userTarget . '">Adicionar Amigo</a>';
                 }
             }
         ?>
@@ -66,13 +66,15 @@ if (!$sameUser){
                 $usuCity  = ($friendship['usuOriginId'] == $userTarget) ? $friendship['usuDestinationCity']  : $friendship['usuOriginCity'];
                 $usuState = ($friendship['usuOriginId'] == $userTarget) ? $friendship['usuDestinationState'] : $friendship['usuOriginState'];
 
-                echo '<div class="w3-quarter w3-container w3-padding">';
-                echo '<p>';
-                echo '<a href="socialnet.php?view=listfriends&usertarget=' . $usuId . '">';
-                echo '<b>' . $usuName . '</b>';
-                echo '</a>';
-                echo '<br>' . $usuCity . ', ' . $usuState . '</p>';
-                echo '</div>';
+                if ($usuId != $userId){
+                    echo '<div class="w3-quarter w3-container w3-padding">';
+                    echo '<p>';
+                    echo '<a href="socialnet.php?view=listfriends&usertarget=' . $usuId . '">';
+                    echo '<b>' . $usuName . '</b>';
+                    echo '</a>';
+                    echo '<br>' . $usuCity . ', ' . $usuState . '</p>';
+                    echo '</div>';
+                }
             }
         ?>
         
@@ -85,12 +87,12 @@ if (!$sameUser){
                 foreach($friendshipsPendingTo as $friendPendingTo){
                     echo '<div class="w3-quarter w3-container w3-padding">';
                     echo '<p>';
-                    echo '<a href="socialnet.php?view=listfriends&usertarget=' . $friendPendingTo['usuDestinationId'] . '">';
-                    echo '<b>' . $friendPendingTo['usuDestinationName'] . '</b>';
+                    echo '<a href="socialnet.php?view=listfriends&usertarget=' . $friendPendingTo['usuOriginId'] . '">';
+                    echo '<b>' . $friendPendingTo['usuOriginName'] . '</b>';
                     echo '</a>';
-                    echo '<br>' . $friendPendingTo['usuDestinationCity'] . ', ' . $friendPendingTo['usuDestinationState'] . '</p>';
-                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=acceptfriend&usertarget=' . $userTarget . '">Aceitar</a>';
-                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=denyfriend&usertarget=' . $userTarget . '">Negar</a>';
+                    echo '<br>' . $friendPendingTo['usuOriginCity'] . ', ' . $friendPendingTo['usuOriginState'] . '</p>';
+                    echo '<a class="w3-button w3-blue w3-margin" href="main.php?action=acceptfriend&usertarget=' . $friendPendingTo['usuOriginId'] . '">Aceitar</a>';
+                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=denyfriend&usertarget=' . $friendPendingTo['usuOriginId'] . '">Negar</a>';
                     echo '</div>';
                 }
 
@@ -112,11 +114,11 @@ if (!$sameUser){
                 foreach($friendshipsDeniedFrom as $friendDeniedFrom){
                     echo '<div class="w3-quarter w3-container w3-padding">';
                     echo '<p>';
-                    echo '<a href="socialnet.php?view=listfriends&usertarget=' . $friendDeniedFrom['usuDestinationId'] . '">';
-                    echo '<b>' . $friendDeniedFrom['usuDestinationName'] . '</b>';
+                    echo '<a href="socialnet.php?view=listfriends&usertarget=' . $friendDeniedFrom['usuOriginId'] . '">';
+                    echo '<b>' . $friendDeniedFrom['usuOriginName'] . '</b>';
                     echo '</a>';
-                    echo '<br>' . $friendDeniedFrom['usuDestinationCity'] . ', ' . $friendDeniedFrom['usuDestinationState'] . '</p>';
-                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=acceptfriend&usertarget=' . $userTarget . '">Aceitar</a>';
+                    echo '<br>' . $friendDeniedFrom['usuOriginCity'] . ', ' . $friendDeniedFrom['usuOriginState'] . '</p>';
+                    echo '<a class="w3-button w3-red w3-margin" href="main.php?action=acceptfriend&usertarget=' . $friendDeniedFrom['usuOriginId'] . '">Aceitar</a>';
                     echo '</div>';
                 }
             }

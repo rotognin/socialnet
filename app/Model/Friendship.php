@@ -24,7 +24,7 @@ class Friendship
     {
         if ($this->friendship['friId'] > 0){
             $sql = 'SELECT * FROM friendships_tb WHERE friId = ' . $this->friendship['friId'];
-            $resutSet = Connection::getConnection()->query($sql, \PDO::FETCH_ASSOC);
+            $resultSet = Connection::getConnection()->query($sql, \PDO::FETCH_ASSOC);
             $result = $resultSet->fetchAll();
 
             if (!is_null($result)){
@@ -213,10 +213,21 @@ class Friendship
     static function deleteFriendship(int $friId)
     {
         $sql = '';
-        $sql = 'DELETE FROM friendships_tb WHERE friUser = :friId';
+        $sql = 'DELETE FROM friendships_tb WHERE friId = :friId';
         $toDelete = Connection::getConnection()->prepare($sql);
         $toDelete->bindValue('friId', $friId, \PDO::PARAM_INT);
         $toDelete->execute();
+    }
+
+    public function updateStatus()
+    {
+        $sql = 'UPDATE friendships_tb SET friStatus = :friStatus WHERE friId = :friId';
+        $toUpdate = Connection::getConnection()->prepare($sql);
+        $toUpdate->bindValue('friStatus', $this->friendship['friStatus'], \PDO::PARAM_INT);
+        $toUpdate->bindValue('friId', $this->friendship['friId'], \PDO::PARAM_INT);
+        $toUpdate->execute();
+
+        return ($toUpdate->rowCount() > 0);
     }
 
     public function addFriend(int $usuOrigin, int $usuDestination)

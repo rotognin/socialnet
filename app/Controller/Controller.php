@@ -229,6 +229,30 @@ class Controller
     }
 
     /**
+     * Aceitar a amizade que foi solicitada
+     */
+    static function acceptfriendAction(array $dataPost, array $dataGet)
+    {
+        $usuOrigin = $_SESSION['userId'];
+        $usuDestination = $dataGet['usertarget'];
+
+        FriendshipController::updateInvite($usuOrigin, $usuDestination, FRI_AT_ACCEPT);
+        self::viewAction('listfriends', 'usertarget=' . $usuOrigin);
+    }
+
+    /**
+     * Negar a amizade que foi solicitada
+     */
+    static function denyfriendAction(array $dataPost, array $dataGet)
+    {
+        $usuOrigin = $_SESSION['userId'];
+        $usuDestination = $dataGet['usertarget'];
+
+        FriendshipController::updateInvite($usuOrigin, $usuDestination, FRI_AT_DENY);
+        self::viewAction('listfriends', 'usertarget=' . $usuOrigin);
+    }
+
+    /**
      * Visualizar a página de alguém
      */
     static function viewuserAction(array $dataPost, array $dataGet)

@@ -44,7 +44,11 @@ class FriendshipController
      */
     static function updateInvite(int $usuOrigin, int $usuDestination, int $friendshipStatus)
     {
-        // 
+        $friendshipId = Model\Friendship::getFriendshipId($usuOrigin, $usuDestination);
+        $o_friendship = new Model\Friendship($friendshipId);
+
+        $o_friendship->friendship['friStatus'] = $friendshipStatus;
+        $o_friendship->updateStatus();
     }
 
     /**

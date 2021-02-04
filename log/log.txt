@@ -27,3 +27,4 @@ Isso veremos...
 4/2/2021 7:50:50 - posText - Opa, estou falando aqui!
 4/2/2021 7:50:50 - Postagem cadastrada com sucesso!
 4/2/2021 7:50:57 - 2 - updateuserpost - Editar postagem
+4/2/2021 15:58:13 - Comunidade criada com sucesso! ID = 13
