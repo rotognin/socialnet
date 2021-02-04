@@ -14,7 +14,7 @@ class CommunityPost
 
     public function __construct(int $cpoId = 0)
     {
-        $communityPost['cpoId'] = $cpoId;
+        $this->communityPost['cpoId'] = $cpoId;
         $this->load();
     }
 

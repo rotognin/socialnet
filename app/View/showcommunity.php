@@ -110,7 +110,7 @@ $_SESSION['message'] = '';
                             echo nl2br($post['cpoText']);
                             echo '</p>';
                             if ($isParticipating){
-                                echo '<a class="w3-button w3-tiny w3-blue" href="main.php?action=replypost&post=' . $post['cpoId'] . '">Responder</a>';
+                                echo '<a class="w3-button w3-tiny w3-blue" href="main.php?action=replypost&post=' . $post['cpoId'] . '&community=' . $communityId . '">Responder</a>';
                             }
                             echo '</div>';
                         }

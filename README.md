@@ -30,14 +30,17 @@ Para rodar esse sistema localmente, siga esses passos:
 
 1. (OK) Fazer um usuário participar de uma comunidade
 2. (Caminhando...) Criar a página de usuários/amigos:
-    - "addfriend" - Adicionar como amigo
-    - "denyfriend" - Negar a amizade
-    - "canceladd" - Cancelar pedido de amizade
+    - (ok) "addfriend" - Adicionar como amigo
+    - (ok) "denyfriend" - Negar a amizade
+    - (ok) "canceladd" - Cancelar pedido de amizade
     - "sendfriendmessage" - Enviar mensagem ao amigo
     - "undofriendship" - Desfazer amizade
 3. Página de recados dos amigos - "listusermessages"
 4. Respostas das postagens nas comunidades
 5. Adicionar uma breve descrição para os usuários
+6. (caminhando...) Criar a página de respostas às postagens das comunidades
+    - (testar...) "replycommunitypost" - Página de inserção da resposta
+    - "insertpostresponse" - Caminho no controller para gravar a resposta no banco
 
 <h3>Futuras melhorias:</h3>
 

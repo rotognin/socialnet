@@ -261,6 +261,14 @@ class Controller
     }
 
     /**
+     * Responder um post de comunidade
+     */
+    static function replypostAction(array $dataPost, array $dataGet)
+    {
+        self::viewAction('replycommunitypost', 'postid=' . $dataGet['post'] . '&communityid=' . $dataGet['community']);
+    }
+
+    /**
      * Passa o controle para a View
      */
     static function viewAction(string $view, string $addGet = '')

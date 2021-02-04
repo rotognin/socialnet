@@ -58,8 +58,8 @@ if (!$sameUser){
         <a class="w3-button w3-blue w3-margin" href="socialnet.php?view=index">Voltar</a>
 
         <div class="w3-container">
-        
-        <?php 
+
+        <?php
             foreach($userFriendships as $friendship){
                 $usuId    = ($friendship['usuOriginId'] == $userTarget) ? $friendship['usuDestinationId']    : $friendship['usuOriginId'];
                 $usuName  = ($friendship['usuOriginId'] == $userTarget) ? $friendship['usuDestinationName']  : $friendship['usuOriginName'];
@@ -77,7 +77,7 @@ if (!$sameUser){
                 }
             }
         ?>
-        
+
         </div>
 
         <?php
